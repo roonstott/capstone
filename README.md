@@ -8,6 +8,6 @@
 * _09:46 Reading documentation on three.js: https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene_
 * _10:34 Working through tutorial on three.js: https://threejs.org/manual/#en/fundamentals_
 * _11:21 Working through tutorial on WEbGL: https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Adding_2D_content_to_a_WebGL_context_
-
+* _12:10 Still working through WEbGl tutorial, trying to config webpack environment for tutorial
 
 
