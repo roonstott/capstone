@@ -12,4 +12,4 @@
 * _1:00 Back from lunch. Will continue with WebGl tutorial_
 * _1:44 Still working on the WebGl tutorial_
 * _2:33 Watching this tutorial: https://www.youtube.com/watch?v=kB0ZVUrI4Aw_
-
+* _3:25 Reviewing this repository again: https://github.com/nicoptere/physarum_
