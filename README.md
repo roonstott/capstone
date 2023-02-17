@@ -10,5 +10,6 @@
 * _11:21 Working through tutorial on WEbGL: https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Adding_2D_content_to_a_WebGL_context_
 * _12:10 Still working through WEbGl tutorial, trying to config webpack environment for tutorial_
 * _1:00 Back from lunch. Will continue with WebGl tutorial_
+* _1:44 Still working on the WebGl tutorial_
 
 

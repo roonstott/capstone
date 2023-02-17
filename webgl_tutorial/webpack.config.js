@@ -19,7 +19,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Shape Tracker',
       template: './src/index.html',
-      inject: 'head'
+      inject: 'body'
     })
   ],
   module: {

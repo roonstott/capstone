@@ -1,8 +1,8 @@
-window.addEventListener("load", function() {
+import "./css/styles.css";
+
+window.addEventListener("load", () => {
   main();
 });
-
-
 //
 // start here
 //
@@ -23,4 +23,21 @@ function main() {
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   // Clear the color buffer with specified clear color
   gl.clear(gl.COLOR_BUFFER_BIT);
+
+  // Vertex shader program
+const vsSource = `
+attribute vec4 aVertexPosition;
+uniform mat4 uModelViewMatrix;
+uniform mat4 uProjectionMatrix;
+void main() {
+  gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+}
+`;
+
+const fsSource = `
+    void main() {
+      gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+    }
+  `;
+
 }
