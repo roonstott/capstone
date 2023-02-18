@@ -13,3 +13,4 @@
 * _1:44 Still working on the WebGl tutorial_
 * _2:33 Watching this tutorial: https://www.youtube.com/watch?v=kB0ZVUrI4Aw_
 * _3:25 Reviewing this repository again: https://github.com/nicoptere/physarum_
+* _4:16 Reading about glMatrix and installing with NPM: https://math.hws.edu/graphicsbook/c7/s1.html#webgl3d.1.2_

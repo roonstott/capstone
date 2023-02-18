@@ -1,3 +1,5 @@
+const glMatrix = require('gl-matrix');
+
 function drawScene(gl, programInfo, buffers) {
   gl.clearColor(0.0, 0.0, 0.0, 1.0); // Clear to black, fully opaque
   gl.clearDepth(1.0); // Clear everything
@@ -19,19 +21,19 @@ function drawScene(gl, programInfo, buffers) {
   const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
   const zNear = 0.1;
   const zFar = 100.0;
-  const projectionMatrix = mat4.create();
+  const projectionMatrix = glMatrix.mat4.create();
 
   // note: glmatrix.js always has the first argument
   // as the destination to receive the result.
-  mat4.perspective(projectionMatrix, fieldOfView, aspect, zNear, zFar);
+  glMatrix.mat4.perspective(projectionMatrix, fieldOfView, aspect, zNear, zFar);
 
   // Set the drawing position to the "identity" point, which is
   // the center of the scene.
-  const modelViewMatrix = mat4.create();
+  const modelViewMatrix = glMatrix.mat4.create();
 
   // Now move the drawing position a bit to where we want to
   // start drawing the square.
-  mat4.translate(
+  glMatrix.mat4.translate(
     modelViewMatrix, // destination matrix
     modelViewMatrix, // matrix to translate
     [-0.0, 0.0, -6.0]
