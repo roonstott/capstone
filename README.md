@@ -30,4 +30,5 @@
 * _1:34 Started building react app_
 * _2:12 Building register and sign in pages_
 * _2:47 Configuring firestore_
+* _3:10 Adding firebase auth_
 
