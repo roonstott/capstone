@@ -17,3 +17,7 @@
 * _3:25 Reviewing this repository again: https://github.com/nicoptere/physarum_
 * _4:16 Reading about glMatrix and installing with NPM: https://math.hws.edu/graphicsbook/c7/s1.html#webgl3d.1.2_
 * _5:00 Reading documentation on three.js and three-fiber.js the react 'wrapper' for three.js_
+
+#### Friday, 02/24
+
+* _8:40 Reading the Firebase Hosting documentation_
