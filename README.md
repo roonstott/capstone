@@ -31,4 +31,5 @@
 * _2:12 Building register and sign in pages_
 * _2:47 Configuring firestore_
 * _3:10 Adding firebase auth_
+* _4:00 Reading firebase documentation_
 
