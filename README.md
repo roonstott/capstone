@@ -22,3 +22,4 @@
 
 * _8:40 Reading the Firebase Hosting documentation_
 * _09:09 Diagramming React component structure_ 
+* _09:52 Still diagramming React component structure_
