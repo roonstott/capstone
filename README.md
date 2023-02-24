@@ -21,3 +21,4 @@
 #### Friday, 02/24
 
 * _8:40 Reading the Firebase Hosting documentation_
+* _09:09 Diagramming React component structure_ 
