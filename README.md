@@ -25,3 +25,4 @@
 * _09:52 Still diagramming React component structure_
 * _10:49 Still planning component structure_ 
 * _11:20 Setting up FireStore account_ 
+* _12:00 Break for lunch. Planning database structure_
