@@ -36,7 +36,8 @@ function SignIn () {
           <label for="password">Password</label>
           <input type="text" name="password" placeholder='Password' />
           <button type="submit">Sign In</button>
-        </form>    
+        </form>
+        <p onClick={() => setShowSignUp(true)}>Create a new account</p>
       </div>
   } else {
     display = <SignUp />

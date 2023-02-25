@@ -1,17 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Logo from './Logo';
 import SignIn from './SignIn';
 import UserController from './UserController';
+import { auth } from './../firebase';
 
 function App () {
+
+  let display; 
+
+  if (auth.currentUser === null) {
+    display = <SignIn />
+  } else if (auth.currentUser !== null) {
+    display = <UserController />
+  }
 
   
   return (
     <React.Fragment>
       <Logo />
-      <SignIn />
-      <UserController />
+      {display}
     </React.Fragment>
   );
 }
