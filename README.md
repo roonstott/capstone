@@ -32,4 +32,5 @@
 * _2:47 Configuring firestore_
 * _3:10 Adding firebase auth_
 * _4:00 Reading firebase documentation_
+* _4:44 Setting up account registration_
 
