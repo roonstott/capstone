@@ -33,4 +33,5 @@
 * _3:10 Adding firebase auth_
 * _4:00 Reading firebase documentation_
 * _4:44 Setting up account registration_
+* _5:08 Still working on user authentication and authorization_
 

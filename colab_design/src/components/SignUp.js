@@ -1,28 +1,27 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
-import { auth } from "./../firebase.js";
+import { auth } from "../firebase.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
-function Register () {
+function SignUp () {
 
-  const [authorized, setAuthorized ] = useState(null);
-  const [registerMessage, setRegisterMessage] = useState(null); 
+  const [signUpMessage, setSignUpMessage] = useState(null); 
 
-  function doRegister(event) {
+  function doSignUp(event) {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
     const confirmPassword = event.target.confirmPassword.value;    
     if (password !== confirmPassword) {
-      setRegisterMessage("'Password' and 'Confirm Password' do not match")
+      setSignUpMessage("'Password' and 'Confirm Password' do not match")
     } else {
       createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setRegisterMessage(`Registration success! You are signed in as ${userCredential.email}`)
+        setSignUpMessage(`Registration success! You are signed in as ${userCredential.email}`)
       })
       .catch((error) => {
-        setRegisterMessage(`Sign up failed: ${error.message}`)
+        setSignUpMessage(`Sign up failed: ${error.message}`)
       })  
     }
   }       
@@ -30,8 +29,8 @@ function Register () {
   return (
     <React.Fragment>
       <h1>Create An Account</h1>
-      {registerMessage}
-      <form onSubmit={() => doRegister()}>
+      {signUpMessage}
+      <form onSubmit={() => doSignUp()}>
         <label for="email">Email Address</label>
         <input type="text" name="email" placeholder='Email'></input>
         <label for="password">Password</label>
@@ -44,9 +43,9 @@ function Register () {
   )
 }
 
-export default Register;
+export default SignUp;
 
-// Register.propTypes = {
+// SignUp.propTypes = {
 
 // }
 
