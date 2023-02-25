@@ -34,4 +34,5 @@
 * _4:00 Reading firebase documentation_
 * _4:44 Setting up account registration_
 * _5:08 Still working on user authentication and authorization_
+* _5:50 Done for day. WIP: Authorization and Authentication_
 
