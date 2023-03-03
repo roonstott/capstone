@@ -6,7 +6,7 @@ import SignIn from './SignIn';
 
 function App () {
 
-  let display; 
+  // let display; 
 
   // if (auth.currentUser === null) {
   //   display = <SignIn />
