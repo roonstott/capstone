@@ -8,17 +8,17 @@ function App () {
 
   let display; 
 
-  if (auth.currentUser === null) {
-    display = <SignIn />
-  } else if (auth.currentUser !== null) {
-    display = <UserController />
-  }
+  // if (auth.currentUser === null) {
+  //   display = <SignIn />
+  // } else if (auth.currentUser !== null) {
+  //   display = <UserController />
+  // }
 
   
   return (
     <React.Fragment>
       <Logo />
-      {display}
+      {/* {display} */}
     </React.Fragment>
   );
 }

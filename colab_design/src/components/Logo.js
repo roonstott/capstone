@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function Logo () {
   return (
-    <header>Logo Placeholder</header>
+    <h1>Logo Placeholder</h1>
   );
 }
 
