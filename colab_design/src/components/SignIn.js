@@ -5,48 +5,68 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import SignUp from './SignUp.js';
 
 
-function SignIn () {
+class SignIn extends React.Component {
+  constructor(props) {  
+    super(props);
+    this.state = {
+      signInSuccess: "", 
+      signUpSuccess: "",
+      showSignUp: false      
+    }
+  }
 
-  const [authorized, setAuthorized ] = useState(null);
-  const [signInMessage, setSignInMessage] = useState(null);
-  // const [showSignUp, setShowSignUp] = useState(false);
-  const showSignUp = true;
+  setShowSignUp = () => {
+    this.setState({
+      showSignUp: true
+    });
+  }
 
-  function doSignIn(event) {
+  setSignInMessage = (m) => {
+    this.setState({
+      signInMessage: m
+    })
+  }
+
+  // const [authorized, setAuthorized ] = useState(null);
+
+  doSignIn = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setSignInMessage(`Successfully signed in as ${userCredential.user.email}`)        
+        this.setSignInMessage(`Successfully signed in as ${userCredential.user.email}`)        
       })
       .catch((error) => {
-        setSignInMessage(`Error signing in: ${error.message}`)
+        this.setSignInMessage(`Error signing in: ${error.message}`)
       })
   }  
 
-  if (showSignUp === false) {
-    return (
-      <React.Fragment>
-        <div>
-          <h1>Sign In</h1>
-          {signInMessage}
-          <form onSubmit={() => doSignIn()}>
-            <label htmlFor="email">Email Address</label>
-            <input type="text" name="email" placeholder='Email Address' />
-            <label htmlFor="password">Password</label>
-            <input type="text" name="password" placeholder='Password' />
-            <button type="submit">Sign In</button>
-          </form>
-          {/* <button onClick={() => setShowSignUp(true)}>Create a new account</button> */}
-        </div>
-      </React.Fragment>
-    )
-  } else {
-    return (
-      <SignUp/>
-    )
-  }   
+ render() {
+    if(this.state.showSignUp === true) {
+      return (
+        <SignUp />
+      )
+      
+    } else {
+      return (
+        <React.Fragment>
+          <div>
+            <h1>Sign In</h1>
+            {this.state.signInMessage}
+            <form onSubmit={() => this.doSignIn()}>
+              <label htmlFor="email">Email Address</label>
+              <input type="text" name="email" placeholder='Email Address' />
+              <label htmlFor="password">Password</label>
+              <input type="text" name="password" placeholder='Password' />
+              <button type="submit">Sign In</button>
+            </form>
+            <button onClick={() => this.setShowSignUp(true)}>Create a new account</button>
+          </div>
+        </React.Fragment>
+      )
+    }
+  }
 }
 
 export default SignIn;

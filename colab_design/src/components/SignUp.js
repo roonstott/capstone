@@ -16,20 +16,19 @@ function SignUp () {
     console.log(password); 
     const confirmPassword = event.target.confirmPassword.value;   
     console.log(confirmPassword);  
-    // if (password !== confirmPassword) {
-    //   console.log("password and confirm do not match");
-    //   // setSignUpMessage("'Password' and 'Confirm Password' do not match");
-    //   console.log(signUpMessage)
-    //   // setShowSignUp(true); 
-    // // } else {
-    // //   createUserWithEmailAndPassword(auth, email, password)
-    // //   .then((userCredential) => {
-    // //     setSignUpMessage(`Registration success! You are signed in as ${userCredential.email}`)
-    // //   })
-    // //   .catch((error) => {
-    // //     setSignUpMessage(`Sign up failed: ${error.message}`)
-    // //   })  
-    // }
+    if (password !== confirmPassword) {
+      console.log("password and confirm do not match");
+      setSignUpMessage("'Password' and 'Confirm Password' do not match");
+      console.log(signUpMessage)
+    } else {
+      createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setSignUpMessage(`Registration success! You are signed in as ${userCredential.email}`)
+      })
+      .catch((error) => {
+        setSignUpMessage(`Sign up failed: ${error.message}`)
+      })  
+    }
   }       
 
   return (
