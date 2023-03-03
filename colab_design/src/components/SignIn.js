@@ -9,7 +9,8 @@ function SignIn () {
 
   const [authorized, setAuthorized ] = useState(null);
   const [signInMessage, setSignInMessage] = useState(null);
-  const [showSignUp, setShowSignUp] = useState(false);
+  // const [showSignUp, setShowSignUp] = useState(false);
+  const showSignUp = true;
 
   function doSignIn(event) {
     event.preventDefault();
@@ -24,30 +25,28 @@ function SignIn () {
       })
   }  
 
-  let display; 
   if (showSignUp === false) {
-    display = 
-      <div>
-        <h1>Sign In</h1>
-        {signInMessage}
-        <form onSubmit={() => doSignIn()}>
-          <label for="email">Email Address</label>
-          <input type="text" name="email" placeholder='Email Address' />
-          <label for="password">Password</label>
-          <input type="text" name="password" placeholder='Password' />
-          <button type="submit">Sign In</button>
-        </form>
-        <p onClick={() => setShowSignUp(true)}>Create a new account</p>
-      </div>
+    return (
+      <React.Fragment>
+        <div>
+          <h1>Sign In</h1>
+          {signInMessage}
+          <form onSubmit={() => doSignIn()}>
+            <label htmlFor="email">Email Address</label>
+            <input type="text" name="email" placeholder='Email Address' />
+            <label htmlFor="password">Password</label>
+            <input type="text" name="password" placeholder='Password' />
+            <button type="submit">Sign In</button>
+          </form>
+          {/* <button onClick={() => setShowSignUp(true)}>Create a new account</button> */}
+        </div>
+      </React.Fragment>
+    )
   } else {
-    display = <SignUp />
-  }
-
-  return (
-    <React.Fragment>    
-      {display}        
-    </React.Fragment>
-  )
+    return (
+      <SignUp/>
+    )
+  }   
 }
 
 export default SignIn;

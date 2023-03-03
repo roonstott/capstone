@@ -6,24 +6,30 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 
 function SignUp () {
 
-  const [signUpMessage, setSignUpMessage] = useState(null); 
+  const [signUpMessage, setSignUpMessage] = useState("This is the success message"); 
 
   function doSignUp(event) {
     event.preventDefault();
     const email = event.target.email.value;
+    console.log(email);
     const password = event.target.password.value;
-    const confirmPassword = event.target.confirmPassword.value;    
-    if (password !== confirmPassword) {
-      setSignUpMessage("'Password' and 'Confirm Password' do not match")
-    } else {
-      createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setSignUpMessage(`Registration success! You are signed in as ${userCredential.email}`)
-      })
-      .catch((error) => {
-        setSignUpMessage(`Sign up failed: ${error.message}`)
-      })  
-    }
+    console.log(password); 
+    const confirmPassword = event.target.confirmPassword.value;   
+    console.log(confirmPassword);  
+    // if (password !== confirmPassword) {
+    //   console.log("password and confirm do not match");
+    //   // setSignUpMessage("'Password' and 'Confirm Password' do not match");
+    //   console.log(signUpMessage)
+    //   // setShowSignUp(true); 
+    // // } else {
+    // //   createUserWithEmailAndPassword(auth, email, password)
+    // //   .then((userCredential) => {
+    // //     setSignUpMessage(`Registration success! You are signed in as ${userCredential.email}`)
+    // //   })
+    // //   .catch((error) => {
+    // //     setSignUpMessage(`Sign up failed: ${error.message}`)
+    // //   })  
+    // }
   }       
 
   return (
@@ -31,11 +37,11 @@ function SignUp () {
       <h1>Create An Account</h1>
       {signUpMessage}
       <form onSubmit={() => doSignUp()}>
-        <label for="email">Email Address</label>
+        <label htmlFor="email">Email Address</label>
         <input type="text" name="email" placeholder='Email'></input>
-        <label for="password">Password</label>
+        <label htmlFor="password">Password</label>
         <input type="text" name="password" placeholder='Password'></input>
-        <label for="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword">Confirm Password</label>
         <input type="text" name="confirmPassword" placeholder='Confirm Password'></input>
         <button type="submit">Register</button>
       </form>
