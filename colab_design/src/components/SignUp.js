@@ -1,6 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 // import { auth } from "../firebase.js";
+import PopUpSignUp from './PopUpSignUp';
 
 
 function SignUp (props) {
@@ -16,10 +17,13 @@ function SignUp (props) {
     props.onSignUp(email, password, confirmPassword)    
   }       
 
+  const reset = () => {
+    props.tryAgain();
+  }
+
   return (
     <React.Fragment>
       <h1>Create An Account</h1>
-      <p>{props.message}</p>
       <form onSubmit={(e) => doSignUp(e)}>
         <label htmlFor="email">Email Address</label>
         <input type="text" name="email" placeholder='Email'></input>
@@ -29,6 +33,10 @@ function SignUp (props) {
         <input type="text" name="confirmPassword" placeholder='Confirm Password'></input>
         <button type="submit">Register</button>
       </form>
+      <dialog id="popUp">
+        <p>{props.message}</p>
+        <button type="click" onClick={() => reset()}>Try Again</button>
+      </dialog>
     </React.Fragment>
   )
 }

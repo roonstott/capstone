@@ -4,7 +4,7 @@ import { auth } from "./../firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import SignUp from './SignUp.js';
-
+import PopUpSignIn from './PopUpSignIn.js';
 
 class SignIn extends React.Component {
   constructor(props) {  
@@ -30,7 +30,6 @@ class SignIn extends React.Component {
     console.log("handleSignUp");
     if(p !== c) {
       this.setState({
-        showSignUp: true,
         signUpSuccess: "'Password' and 'Confirm Password' do not match"
       });
     } else {
@@ -48,7 +47,13 @@ class SignIn extends React.Component {
           });
         });
     }
-  }  
+  }
+
+  resetSignUp = () => {
+    this.setState({
+      signUpSuccess: ""
+    })
+  }
 
   doSignIn = (event) => {
     event.preventDefault();
@@ -57,12 +62,14 @@ class SignIn extends React.Component {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         this.setState({
-          signInSuccess: `Successfully signed in as ${userCredential.user.email}`
-        });        
+          signInSuccess: `Successfully signed in as ${userCredential.user.email}`,
+          signUpSuccess: ""
+        });          
       })
       .catch((error) => {
         this.setState({
-          signInSuccess: `Error signing in: ${error.message}`
+          signInSuccess: `Error signing in: ${error.message}`,
+          signUpSuccess: ""
         });
       });
   }  
@@ -70,7 +77,7 @@ class SignIn extends React.Component {
  render() {
     if(this.state.showSignUp === true) {
       return (
-        <SignUp onSignUp={this.handleSignUp} message={this.state.signUpSuccess}/>
+        <SignUp onSignUp={this.handleSignUp} message={this.state.signUpSuccess} tryAgain={this.resetSignUp}/>
       )
       
     } else {
@@ -89,6 +96,7 @@ class SignIn extends React.Component {
             </form>
             <button onClick={() => this.showSignUp(true)}>Create a new account</button>
           </div>
+          <PopUpSignIn message={this.state.signInSuccess} />        
         </React.Fragment>
       )
     }
