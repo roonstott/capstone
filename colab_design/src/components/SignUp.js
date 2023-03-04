@@ -1,7 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 // import { auth } from "../firebase.js";
-import PopUpSignUp from './PopUpSignUp';
 
 
 function SignUp (props) {
@@ -9,17 +8,37 @@ function SignUp (props) {
   function doSignUp(event) {
     event.preventDefault();
     const email = event.target.email.value;
-    console.log(email);
     const password = event.target.password.value;
-    console.log(password); 
     const confirmPassword = event.target.confirmPassword.value;   
-    console.log(confirmPassword);
     props.onSignUp(email, password, confirmPassword)    
   }       
 
   const reset = () => {
     props.tryAgain();
+    document.getElementById("popUp").close();
   }
+
+  const popUp = () => {
+    if(props.message !== "") {
+      document.getElementById("popUp").showModal();
+    }
+  }
+
+  const goToLogIn = () => {
+    props.goToLogIn();
+  }
+
+  const button = () => {
+    if(props.success) {
+      return (
+        <button type="click" onClick={() => goToLogIn()}>Go To Log In</button>
+      )
+    } else {
+      return (
+        <button type="click" onClick={() => reset()}>Try Again</button>
+      )
+    }
+  }  
 
   return (
     <React.Fragment>
@@ -35,8 +54,10 @@ function SignUp (props) {
       </form>
       <dialog id="popUp">
         <p>{props.message}</p>
-        <button type="click" onClick={() => reset()}>Try Again</button>
+        {button()}
       </dialog>
+      {popUp()}
+      <button type="click" onClick={() => props.goToLogIn()}>Back To Log In Page</button>
     </React.Fragment>
   )
 }

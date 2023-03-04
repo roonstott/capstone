@@ -4,46 +4,47 @@ import { auth } from "./../firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import SignUp from './SignUp.js';
-import PopUpSignIn from './PopUpSignIn.js';
 
 class SignIn extends React.Component {
   constructor(props) {  
     super(props);
     this.state = {
-      signInSuccess: "", 
-      signUpSuccess: "",
+      signInMessage: "", 
+      signUpMessage: "",
+      signUpSuccess: false,
+      signInSuccess: false,
       showSignUp: false      
     }
   }
 
   // const [authorized, setAuthorized ] = useState(null);
 
-  showSignUp = (bool) => {
+  showSignUp = () => {
     this.setState({
-      showSignUp: bool,
-      signInSuccess: "",
-      signUpSuccess: ""
+      showSignUp: true,
+      signInMessage: "",
+      signUpMessage: ""
     });
   }
 
   handleSignUp = (e, p, c) => {
-    console.log("handleSignUp");
     if(p !== c) {
       this.setState({
-        signUpSuccess: "'Password' and 'Confirm Password' do not match"
+        signUpMessage: "'Password' and 'Confirm Password' do not match",
       });
     } else {
       createUserWithEmailAndPassword(auth, e, p)
         .then((userCredential) => {
           this.setState({
-            signUpSuccess: `You've successfully signed up, ${userCredential.user.email}!`,
-            showSignUp: false, 
-            signInSuccess: ""
+            signUpMessage: `You've successfully signed up, ${userCredential.user.email}!`,
+            signInMessage: "", 
+            signUpSuccess: true
           });
+
         })
         .catch((error) => {
           this.setState({
-            signUpSuccess: `There was an error signing up: ${error.message}!`
+            signUpMessage: `There was an error signing up: ${error.message}!`
           });
         });
     }
@@ -51,7 +52,7 @@ class SignIn extends React.Component {
 
   resetSignUp = () => {
     this.setState({
-      signUpSuccess: ""
+      signUpMessage: ""
     })
   }
 
@@ -62,31 +63,70 @@ class SignIn extends React.Component {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         this.setState({
-          signInSuccess: `Successfully signed in as ${userCredential.user.email}`,
-          signUpSuccess: ""
-        });          
+          signInMessage: `Successfully signed in as ${userCredential.user.email}`,
+          signUpMessage: "",
+          signInSuccess: true
+        });  
       })
       .catch((error) => {
         this.setState({
-          signInSuccess: `Error signing in: ${error.message}`,
-          signUpSuccess: ""
+          signInMessage: `Error signing in: ${error.message}`,
+          signUpMessage: ""
         });
       });
-  }  
+  }
+
+  popUp = () => {
+    if(this.state.signInMessage !== "") {
+      document.getElementById("popUp").showModal();
+    }    
+  }
+
+  goToAccount = () => {
+    this.setState({
+      signInMessage: "",
+      signUpMessage: "",
+      signInSuccess: false,
+      signUpSuccess: false, 
+      showSignUp: false
+    });
+    document.getElementById("popUp").close();
+  }
+
+  resetSignIn = () => {
+    this.setState({
+      signInMessage: "",
+      signUpMessage: "",
+      signInSuccess: false,
+      signUpSuccess: false,      
+      showSignUp: false
+    });
+    document.getElementById("popUp").close();
+  }
+
+  button = () => {
+    if(this.state.signInSuccess) {
+      return (
+        <button type="click" onClick={() => this.goToAccount()}>Go To Your Account</button>
+      )
+    } else {
+      return (
+        <button type="click" onClick={() => this.resetSignIn()}>Try Again</button>
+      )
+    }
+  }
 
  render() {
     if(this.state.showSignUp === true) {
       return (
-        <SignUp onSignUp={this.handleSignUp} message={this.state.signUpSuccess} tryAgain={this.resetSignUp}/>
+        <SignUp onSignUp={this.handleSignUp} message={this.state.signUpMessage} tryAgain={this.resetSignUp} success={this.state.signUpSuccess} goToLogIn={this.resetSignIn}/>
       )
       
     } else {
       return (
         <React.Fragment>
           <div>
-            <h1>Sign In</h1>
-            <p>{this.state.signUpSuccess}</p>
-            <p>{this.state.signInSuccess}</p>
+            <h1>Sign In</h1>            
             <form onSubmit={(e) => this.doSignIn(e)}>
               <label htmlFor="email">Email Address</label>
               <input type="text" name="email" placeholder='Email Address' />
@@ -94,9 +134,13 @@ class SignIn extends React.Component {
               <input type="text" name="password" placeholder='Password' />
               <button type="submit">Sign In</button>
             </form>
-            <button onClick={() => this.showSignUp(true)}>Create a new account</button>
+            <button onClick={() => this.showSignUp()}>Create a new account</button>
           </div>
-          <PopUpSignIn message={this.state.signInSuccess} />        
+          <dialog id="popUp">
+            <p>{this.state.signInMessage}</p>
+            {this.button()}
+          </dialog>
+          {this.popUp()}
         </React.Fragment>
       )
     }
