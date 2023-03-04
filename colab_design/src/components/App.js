@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from './Logo';
 import SignIn from './SignIn';
-// import UserController from './UserController';
-// import { auth } from './../firebase';
+import { auth } from './../firebase';
+import UserController from './UserController';
 
 function App () {
 
-  // let display; 
+  const [currentUser, setCurrentUser] = useState(auth.currentUser)
 
-  // if (auth.currentUser === null) {
-  //   display = <SignIn />
-  // } else if (auth.currentUser !== null) {
-  //   display = <UserController />
-  // }
+  let display;
+  if (currentUser === null) {
+    display = <SignIn setCurrentUser={setCurrentUser}/>
+  } else if (currentUser !== null) {
+    display = <UserController />
+  }
 
-  
   return (
     <React.Fragment>
       <Logo />
-      <SignIn />
+      {display}
     </React.Fragment>
   );
 }

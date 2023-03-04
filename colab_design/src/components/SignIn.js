@@ -39,8 +39,7 @@ class SignIn extends React.Component {
             signUpMessage: `You've successfully signed up, ${userCredential.user.email}!`,
             signInMessage: "", 
             signUpSuccess: true
-          });
-
+          });          
         })
         .catch((error) => {
           this.setState({
@@ -91,6 +90,7 @@ class SignIn extends React.Component {
       showSignUp: false
     });
     document.getElementById("popUp").close();
+    this.props.setCurrentUser(auth.currentUser); 
   }
 
   resetSignIn = () => {

@@ -1,9 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+import { auth } from './../firebase';
 
 function UserController () {
   return (
-    <p>Place Holder</p>
+    <p>You have reached your account {auth.currentUser.email}</p>
   );
 }
 
