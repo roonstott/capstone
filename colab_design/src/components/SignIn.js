@@ -126,7 +126,7 @@ class SignIn extends React.Component {
       return (
         <React.Fragment>
           <div>
-            <h1>Sign In</h1>            
+            <h1 className="text-orange-600">Sign In</h1>            
             <form onSubmit={(e) => this.doSignIn(e)}>
               <label htmlFor="email">Email Address</label>
               <input type="text" name="email" placeholder='Email Address' />
