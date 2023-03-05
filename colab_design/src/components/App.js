@@ -15,6 +15,8 @@ function App () {
     display = <UserController />
   }
 
+  console.log(auth.currentUser.uid)
+
   return (
       <div className="bg-gradient-to-r from-zinc-200 to-lime-100 h-screen">
         <Logo />
