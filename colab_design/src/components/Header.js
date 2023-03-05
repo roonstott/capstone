@@ -6,12 +6,10 @@ import DropDownUser from './DropDownUser';
 function Header () {
   return (
     <React.Fragment>
-      <header className="flex">
-        <div class="projNav">
-          <button>All Projects</button>
-          <button>Your Projects</button>
-          <button>New Project</button>
-        </div>
+      <header class="head" className="flex justify-around py-6">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700">All Projects</button>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700">Your Projects</button>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700">New Project</button>        
         <div class="userDropDown">
           <DropDownUser />          
         </div>
