@@ -16,10 +16,10 @@ function App () {
   }
 
   return (
-    <React.Fragment>
-      <Logo />
-      {display}
-    </React.Fragment>
+      <div className="bg-gradient-to-r from-zinc-200 to-lime-100 h-screen">
+        <Logo />
+        {display}
+      </div>
   );
 }
 
