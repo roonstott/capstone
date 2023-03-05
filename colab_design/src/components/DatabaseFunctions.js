@@ -1,5 +1,5 @@
-import { auth, db } from './../firebase';
-import { collection, addDoc, doc, setDoc } from "firebase/firestore";
+import { db } from './../firebase';
+import { collection, addDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 
 const makeUser = async (uid, e, first, last) => { //called once on account creation
   const profile = {
@@ -25,51 +25,26 @@ const makeProject = async (owner, title, description, invitations) => { //called
   }
 
   await addDoc(collection(db, "projects"), project) // adds project to collection of all project
-  //still need to send invitations to invitees
-
+  //still need to add projId to invitees' 'projectsInvited' array
+  //still need to add project to owner's 'projectsOwned' array
 }
 
-const addCollaborator = async (projId, colabUid) => { //called each time an invitee accepts an invitation: updates project to have user, and updateds user to have project
-  const proj = await doc(db, "projects", projId );
-  const user = await doc(db, "users", colabUid);
-  const colabArray = proj.collaborators;
-  const updated
+const addCollaborator = async (projId, colabUid) => { //called each time an invitee accepts an invitation: 
+  
+  //update project so that colabUid is removed from invitations and added to collaborators
+  const projRef = doc(db, "projects", projId );
+  const proj = projRef.data(); 
+  const updatedInviteArray = proj.invitations.filter((id) => id !== colabUid);
+  const updatedColabArray = proj.collaborators.push(colabUid);
+  const updatedProj = {...proj, invitations: updatedInviteArray, collaborators: updatedColabArray };
+  await updateDoc(projRef, updatedProj);
+
+  //update user so that projId is removed from projectsInvited and added to projectsJoined
+  const userRef = await doc(db, "users", colabUid);
+  const user = userRef.data();
+  const updatedUserInvitations = user.projectsInvited.filter((id) => id !== projId);
+  const updatedUserColabs = user.projectsJoined.push(projId);
+  const updatedUser = { ...user, projectsInvited: updatedUserInvitations, projectsJoined: updatedUserColabs };
+  await updateDoc(userRef, updatedUser);
 }
 
-
-
-
-Projects {
-  owner: userId,
-  contributors: 
-  [
-    userId,
-    userId,
-    userId
-  ]
-  editHistory: [
-    {
-      editId: id,
-      parentId: parentId
-      timeStamp: dateTime,
-      editedBy: userId,
-      editedByName: userName,
-      projectFile: file
-    },
-    {
-      timeStamp: dateTime,
-      projectFile: file
-    },
-    {
-      timeStamp: dateTime,
-      projectFile: file
-    }
-  ]
-}
-
-AllProjects: [
-  projectObj,
-  projectObj,
-  projectObj,
-  projectObj
-]
