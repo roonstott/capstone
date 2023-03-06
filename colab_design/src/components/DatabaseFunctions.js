@@ -67,28 +67,6 @@ export const addCollaborator = async (projId, colabUid) => { //called each time 
   await updateDoc(userRef, updatedUser);
 }
 
-export const getProjects = async (uid) => {
-  const userSnap = await getDoc(doc(db, "users", uid));
-  const userData = userSnap.data(); 
-  const projectsOwned = userData.projectsOwned.map(async(id) => {
-    const projOwnSnap = await getDoc(doc(db, "projects", id));
-    const projOwnData = projOwnSnap.data(); 
-    return projOwnData;
-  });  
-
-  const projectsJoined = userData.projectsJoined.map(async(id) => {
-    const projJoinSnap = await getDoc(doc(db, "projects", id));
-    const projJoinData = projJoinSnap.data(); 
-    return projJoinData;
-  });
-
-  return {
-    projectsOwned,
-    projectsJoined    
-  }  
-  
-}
-
 //Still need a function to invite a user to a project after it is made 'Send Invitation'
 
 //Uplaod documents to project
