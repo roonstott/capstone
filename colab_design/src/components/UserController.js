@@ -11,8 +11,12 @@ function UserController () {
     const title = event.target.title.value;
     const description = event.target.description.value; 
     const owner = auth.currentUser.uid;
-    const invitations = ["nhfJIOdGgEfD5drhwEIbVHtjnnM2"];
+    const invitations = ["WojeQI4LXdYh17PHDHl7IcyPRLp1"];
     dbFunc.makeProject(owner, title, description, invitations);
+  }
+
+  const acceptInvitation = () => {
+    dbFunc.addCollaborator("JHemg2AfQ9Zr8LCMvGQF", "WojeQI4LXdYh17PHDHl7IcyPRLp1" )
   }
   
   return (
@@ -25,6 +29,8 @@ function UserController () {
         <input type="text" name="description" className="w-80"></input>
         <button type="submit">Submit</button>
       </form>
+
+      <button onClick={() => acceptInvitation()}>Accept Invitation</button>
       
     </React.Fragment>
   );

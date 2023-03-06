@@ -28,17 +28,20 @@ export const makeProject = async (ownerId, title, description, invitations) => {
   const projId = docRef.id
   
   //Add docId to invitees' 'projectsInvited' array
-  invitations.foreach(async(uid) => {
+  project.invitations.map(async(uid) => {
     const userDocRef = doc(db, "users", uid);
-    const user = userDocRef.data();
-    const updatedProjInvite = user.projectsInvited.push(projId);
-    const updatedUser = {...user, projectsInvited: updatedProjInvite};
-    await updateDoc(userDocRef, updatedUser);
-  })
+    const userDocSnap = await getDoc(userDocRef); 
+    const userDocData = userDocSnap.data();
+    const updatedProjInvite = userDocData.projectsInvited.concat(projId);
+    const updatedUserDocData = {...userDocData, projectsInvited: updatedProjInvite};
+    await updateDoc(userDocRef, updatedUserDocData);
+  });
+
   //Add project to owner's 'projectsOwned' array
   const ownerDocRef = doc(db, "users", ownerId);
-  const ownerDocData = ownerDocRef.data();
-  const updatedOwnerProjArray = ownerDocData.projectsOwned.push(projId); 
+  const ownerDocSnap = await getDoc(ownerDocRef)
+  const ownerDocData = ownerDocSnap.data(); 
+  const updatedOwnerProjArray = ownerDocData.projectsOwned.concat(projId); 
   const updatedOwner = {...ownerDocData, projectsOwned: updatedOwnerProjArray };
   await updateDoc(ownerDocRef, updatedOwner); 
 }
@@ -47,18 +50,20 @@ export const addCollaborator = async (projId, colabUid) => { //called each time 
   
   //update project so that colabUid is removed from invitations and added to collaborators
   const projRef = doc(db, "projects", projId );
-  const proj = projRef.data(); 
-  const updatedInviteArray = proj.invitations.filter((id) => id !== colabUid);
-  const updatedColabArray = proj.collaborators.push(colabUid);
-  const updatedProj = {...proj, invitations: updatedInviteArray, collaborators: updatedColabArray };
+  const projSnap = await getDoc(projRef);
+  const projData = projSnap.data(); 
+  const updatedInviteArray = projData.invitations.filter((id) => id !== colabUid);
+  const updatedColabArray = projData.collaborators.concat(colabUid);
+  const updatedProj = {...projData, invitations: updatedInviteArray, collaborators: updatedColabArray };
   await updateDoc(projRef, updatedProj);
 
   //update user so that projId is removed from projectsInvited and added to projectsJoined
-  const userRef = await doc(db, "users", colabUid);
-  const user = userRef.data();
-  const updatedUserInvitations = user.projectsInvited.filter((id) => id !== projId);
-  const updatedUserColabs = user.projectsJoined.push(projId);
-  const updatedUser = { ...user, projectsInvited: updatedUserInvitations, projectsJoined: updatedUserColabs };
+  const userRef = doc(db, "users", colabUid);
+  const userSnap = await getDoc(userRef);
+  const userData = userSnap.data();
+  const updatedUserInvitations = userData.projectsInvited.filter((id) => id !== projId);
+  const updatedUserColabs = userData.projectsJoined.concat(projId);
+  const updatedUser = { ...userData, projectsInvited: updatedUserInvitations, projectsJoined: updatedUserColabs };
   await updateDoc(userRef, updatedUser);
 }
  
