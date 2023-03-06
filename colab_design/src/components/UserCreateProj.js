@@ -10,7 +10,7 @@ function UserCreateProj () {
     const title = event.target.title.value;
     const description = event.target.description.value; 
     const owner = auth.currentUser.uid;
-    const invitations = ["WojeQI4LXdYh17PHDHl7IcyPRLp1"];
+    const invitations = ["fRwKpPioTAVN6RjHs89iAJl2JN93"];
     dbFunc.makeProject(owner, title, description, invitations);
   }  
 

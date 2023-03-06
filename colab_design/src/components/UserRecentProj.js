@@ -3,10 +3,20 @@ import { auth } from "./../firebase.js";
 import * as dbFunc from './DatabaseFunctions';
 
 
-function UserRecentProj() {
+ function UserRecentProj() {
 
-  const allProj = dbFunc.getProjects(auth.currentUser.uid)["allProjects"];
-  console.log(allProj); 
+  const allProj = async () => {
+    const p = await dbFunc.getProjects(auth.currentUser.uid);
+    return p;
+  }
+
+  const p = allProj();
+  p.then(result => {
+    console.log("result", result.projectsOwned[0]); 
+  })
+
+  
+
 
   return (
     <React.Fragment>
