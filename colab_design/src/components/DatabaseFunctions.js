@@ -66,5 +66,24 @@ export const addCollaborator = async (projId, colabUid) => { //called each time 
   const updatedUser = { ...userData, projectsInvited: updatedUserInvitations, projectsJoined: updatedUserColabs };
   await updateDoc(userRef, updatedUser);
 }
+
+export const getProjects = async (uid) => {
+  const userSnap = await getDoc(doc(db, "users", uid));
+  const userData = userSnap.data(); 
+  const projectsOwned = userData.projectsOwned;
+  const projectsJoined = userData.projectsJoined; 
+  const allProjects = [...projectsOwned, ...projectsJoined];
+  return {
+    projectsOwned,
+    projectsJoined,
+    allProjects
+  }
+}
+
+//Still need a function to invite a user to a project after it is made 'Send Invitation'
+
+//Uplaod documents to project
+
+//Create an edit and add it to the project edit history array
  
 
