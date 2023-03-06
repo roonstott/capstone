@@ -1,7 +1,7 @@
 import { db } from './../firebase';
-import { collection, addDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
 
-const makeUser = async (uid, e, first, last) => { //called once on account creation
+export const makeUser = async (uid, e, first, last) => { //called once on account creation
   const profile = {
     firstName: first,
     lastName: last,
@@ -14,9 +14,9 @@ const makeUser = async (uid, e, first, last) => { //called once on account creat
   await setDoc(doc(db, "users", uid), profile);  
 }
 
-const makeProject = async (owner, title, description, invitations) => { //called each time a user makes a project
+export const makeProject = async (ownerId, title, description, invitations) => { //called each time a user makes a project
   const project = {
-    owner,
+    ownerId,
     title,
     description,
     invitations, //array of uid's
@@ -24,12 +24,26 @@ const makeProject = async (owner, title, description, invitations) => { //called
     editHistory: [] //empy array to be updated as people add edits
   }
 
-  await addDoc(collection(db, "projects"), project) // adds project to collection of all project
-  //still need to add projId to invitees' 'projectsInvited' array
-  //still need to add project to owner's 'projectsOwned' array
+  const docRef = await addDoc(collection(db, "projects"), project);
+  const projId = docRef.id
+  
+  //Add docId to invitees' 'projectsInvited' array
+  invitations.foreach(async(uid) => {
+    const userDocRef = doc(db, "users", uid);
+    const user = userDocRef.data();
+    const updatedProjInvite = user.projectsInvited.push(projId);
+    const updatedUser = {...user, projectsInvited: updatedProjInvite};
+    await updateDoc(userDocRef, updatedUser);
+  })
+  //Add project to owner's 'projectsOwned' array
+  const ownerDocRef = doc(db, "users", ownerId);
+  const ownerDocData = ownerDocRef.data();
+  const updatedOwnerProjArray = ownerDocData.projectsOwned.push(projId); 
+  const updatedOwner = {...ownerDocData, projectsOwned: updatedOwnerProjArray };
+  await updateDoc(ownerDocRef, updatedOwner); 
 }
 
-const addCollaborator = async (projId, colabUid) => { //called each time an invitee accepts an invitation: 
+export const addCollaborator = async (projId, colabUid) => { //called each time an invitee accepts an invitation: 
   
   //update project so that colabUid is removed from invitations and added to collaborators
   const projRef = doc(db, "projects", projId );
@@ -47,4 +61,5 @@ const addCollaborator = async (projId, colabUid) => { //called each time an invi
   const updatedUser = { ...user, projectsInvited: updatedUserInvitations, projectsJoined: updatedUserColabs };
   await updateDoc(userRef, updatedUser);
 }
+ 
 

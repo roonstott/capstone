@@ -10,7 +10,9 @@ function SignUp (props) {
     const email = event.target.email.value;
     const password = event.target.password.value;
     const confirmPassword = event.target.confirmPassword.value;   
-    props.onSignUp(email, password, confirmPassword)    
+    const first = event.target.first.value;
+    const last = event.target.last.value;
+    props.onSignUp(email, password, confirmPassword, first, last)    
   }       
 
   const reset = () => {
@@ -50,6 +52,10 @@ function SignUp (props) {
         <input type="text" name="password" placeholder='Password'></input>
         <label htmlFor="confirmPassword">Confirm Password</label>
         <input type="text" name="confirmPassword" placeholder='Confirm Password'></input>
+        <label htmlFor="first">First Name</label>
+        <input type="text" name="first" placeholder='First Name'></input>
+        <label htmlFor="last">Last Name</label>
+        <input type="text" name="last" placeholder='Last Name'></input>
         <button type="submit">Register</button>
       </form>
       <dialog id="popUp">

@@ -1,9 +1,11 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { auth } from "./../firebase.js";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import SignUp from './SignUp.js';
+import * as dbFunc from './DatabaseFunctions';
+
+
 
 class SignIn extends React.Component {
   constructor(props) {  
@@ -27,7 +29,7 @@ class SignIn extends React.Component {
     });
   }
 
-  handleSignUp = (e, p, c) => {
+  handleSignUp = (e, p, c, first, last) => {
     if(p !== c) {
       this.setState({
         signUpMessage: "'Password' and 'Confirm Password' do not match",
@@ -39,7 +41,8 @@ class SignIn extends React.Component {
             signUpMessage: `You've successfully signed up, ${userCredential.user.email}!`,
             signInMessage: "", 
             signUpSuccess: true
-          });          
+          });
+          dbFunc.makeUser(userCredential.user.uid, e, first, last);          
         })
         .catch((error) => {
           this.setState({
