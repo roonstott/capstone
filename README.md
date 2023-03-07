@@ -39,3 +39,4 @@
 #### Tuesday, 3/7
 
 * _8:25 First commit of day_
+* _9:05 Working on sizing of user project gallery_

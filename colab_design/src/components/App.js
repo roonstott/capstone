@@ -21,7 +21,7 @@ function App () {
   // console.log(auth.currentUser.uid)
 
   return (
-      <div className="bg-gradient-to-r from-zinc-200 to-lime-100 h-screen">
+      <div className="bg-gradient-to-r from-zinc-200 to-lime-100 min-h-screen">
         <Logo />
         {display}
       </div>
