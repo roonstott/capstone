@@ -44,3 +44,4 @@
 * _10:56 Add userController method to switch to project detail view_
 * _12:05 Format project detail component and add text editing box_
 * _12:46 Format text editor_
+* _1:37 Adding 'add member' popup to project detail_

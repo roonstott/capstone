@@ -110,11 +110,11 @@ class SignIn extends React.Component {
   button = () => {
     if(this.state.signInSuccess) {
       return (
-        <button type="click" onClick={() => this.goToAccount()}>Go To Your Account</button>
+        <button className="bg-red-300 border-slate-400 rounded px-4 py-1" type="click" onClick={() => this.goToAccount()}>Go To Your Account</button>
       )
     } else {
       return (
-        <button type="click" onClick={() => this.resetSignIn()}>Try Again</button>
+        <button className="bg-red-300 border-slate-400 rounded px-4 py-1" type="click" onClick={() => this.resetSignIn()}>Try Again</button>
       )
     }
   }
@@ -135,9 +135,9 @@ class SignIn extends React.Component {
               <input type="text" name="email" placeholder='Email Address' />
               <label htmlFor="password">Password</label>
               <input type="text" name="password" placeholder='Password' />
-              <button type="submit">Sign In</button>
+              <button className="bg-red-300 border-slate-400 rounded px-4 py-1" type="submit">Sign In</button>
             </form>
-            <button onClick={() => this.showSignUp()}>Create a new account</button>
+            <button className="bg-red-300 border-slate-400 rounded px-4 py-1" onClick={() => this.showSignUp()}>Create a new account</button>
           </div>
           <dialog id="popUp">
             <p>{this.state.signInMessage}</p>

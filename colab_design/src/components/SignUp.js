@@ -33,11 +33,11 @@ function SignUp (props) {
   const button = () => {
     if(props.success) {
       return (
-        <button type="click" onClick={() => goToLogIn()}>Go To Log In</button>
+        <button className="bg-red-300 border-slate-400 rounded px-4 py-1" type="click" onClick={() => goToLogIn()}>Go To Log In</button>
       )
     } else {
       return (
-        <button type="click" onClick={() => reset()}>Try Again</button>
+        <button className="bg-red-300 border-slate-400 rounded px-4 py-1" type="click" onClick={() => reset()}>Try Again</button>
       )
     }
   }  
@@ -56,14 +56,14 @@ function SignUp (props) {
         <input type="text" name="first" placeholder='First Name'></input>
         <label htmlFor="last">Last Name</label>
         <input type="text" name="last" placeholder='Last Name'></input>
-        <button type="submit">Register</button>
+        <button className="bg-red-300 border-slate-400 rounded px-4 py-1" type="submit">Register</button>
       </form>
       <dialog id="popUp">
         <p>{props.message}</p>
         {button()}
       </dialog>
       {popUp()}
-      <button type="click" onClick={() => props.goToLogIn()}>Back To Log In Page</button>
+      <button className="bg-red-300 border-slate-400 rounded px-4 py-1" type="click" onClick={() => props.goToLogIn()}>Back To Log In Page</button>
     </React.Fragment>
   )
 }
