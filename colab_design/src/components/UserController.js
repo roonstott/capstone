@@ -67,8 +67,10 @@ function UserController ({ isLoading, setIsLoading}) {
 
     return (
       <React.Fragment>
-        <Header setView={setView}/>
-        {display}
+        <div className="p-6">
+          <Header setView={setView}/>
+            {display}
+        </div>
       </React.Fragment>
     );
   }  

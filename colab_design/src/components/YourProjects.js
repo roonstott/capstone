@@ -13,8 +13,6 @@ function YourProjects({projOwned}) {
     )
   })
 
-
-
   return (
     <React.Fragment>
       <h1>Your Projects</h1>

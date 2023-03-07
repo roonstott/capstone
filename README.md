@@ -43,3 +43,4 @@
 * _10:15 Still working on styling of project gallery_
 * _10:56 Add userController method to switch to project detail view_
 * _12:05 Format project detail component and add text editing box_
+* _12:46 Format text editor_
