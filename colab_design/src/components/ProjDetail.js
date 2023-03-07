@@ -1,10 +1,12 @@
-import React from 'react'
+import React { useState } from 'react'
 import { collection, doc, getDoc, onSnapshot, getDocs } from "firebase/firestore";
 import { db } from './../firebase';
 
 function ProjDetail({ proj }) {
   const p = proj[0];
   const title = p.title;
+
+  const [divEl, setDivEl] = useState(null)
 
   const openPopUp = () => {
     document.getElementById("participantPopUp").showModal();
@@ -21,17 +23,22 @@ function ProjDetail({ proj }) {
     let matches = [];
     userData.forEach(doc => {
       if (
-        doc.data().firstName.toLowerCase().includes(input) ||
-        doc.data().lastName.toLowerCase().includes(input) ||
-        doc.data().email.toLowerCase().includes(input) &&
-        ! matches.includes(doc.data())
+        (doc.data().firstName.toLowerCase().includes(input) || (doc.data().lastName.toLowerCase().includes(input)) || (doc.data().email.toLowerCase().includes(input))) && (! matches.includes(doc.data()))
       ) {
         matches.push(doc.data())
-      }
+      }      
     })
-    console.log(matches)
-    
+    const divEl = matches.map(el => {
+      return (
+        <div>
+          <p> {el.firstName} {el.lastName} {el.email}</p>
+        </div>
+      )
+    })
+    return divEl;
   }
+
+  const placeDivEl = {}
 
   return (
     <React.Fragment>
@@ -49,20 +56,32 @@ function ProjDetail({ proj }) {
 
         </div>
       </div>
-      <dialog id="participantPopUp" className=" mx-20 w-1/2 border-slate-400 border-2">
-        <label for="searchParticipants">Add Members</label>
-        <input onChange={(e) => handleQueryMatches(e)}id="searchParticipants" name="searchParticipants" className="m-4 p-2"/>
-        <table>
-          <thead>
-            <tr>
-              <td>Participants</td>
-            </tr>
-          </thead>
-          <tbody>
+      <dialog id="participantPopUp" className=" mx-20 w-2/3 border-slate-400 border-2">
+        <div className='flex'>
+          <div className="basis-3/6">
+            <label for="searchParticipants">Add Members</label>
+            <input onChange={(e) => handleQueryMatches(e)} id="searchParticipants" name="searchParticipants" className="m-4 p-2"/>
+            <div id="matches">
 
-          </tbody>
-        </table>
-        <button onClick={closePopUp}className="bg-red-300 border-slate-400 rounded px-4 py-1">Close</button>
+            </div>
+          </div>
+          <div className="basis-2/6">
+            <table>
+              <thead>
+                <tr>
+                  <td>Participants</td>
+                </tr>
+              </thead>
+              <tbody>
+                {/* place participants  */}
+              </tbody>
+            </table>
+          </div>
+          <div className='basis-1/6 flex items-end'>
+            <button onClick={closePopUp}className="align-self-end w-20 h-8 bg-red-300 border-slate-400 rounded px-4 py-1 text-align-center">Close</button>
+          </div>          
+        </div>        
+        
       </dialog>
       
     </React.Fragment>

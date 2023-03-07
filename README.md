@@ -46,3 +46,4 @@
 * _12:46 Format text editor_
 * _1:37 Adding 'add member' popup to project detail_
 * _2:30 Researching input dropdown search match suggestions_
+* _3:39 Still working on input dropdown search match suggestions_ 
