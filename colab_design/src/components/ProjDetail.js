@@ -5,7 +5,13 @@ function ProjDetail({ proj }) {
   const title = p.title;
   return (
     <React.Fragment>
-      <p>{title}</p>
+      <div className="min-h-screen mx-20 max-w-screen-sm">
+        <div className="bg-slate-100">
+          <h3>{title}</h3>
+        </div>        
+        <p className="min-h-screen bg-white p-12 " contentEditable="true">Start your project</p>
+      </div>
+      
     </React.Fragment>
   )
 }

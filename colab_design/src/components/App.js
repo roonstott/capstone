@@ -19,9 +19,11 @@ function App () {
   // console.log(auth.currentUser.uid)
 
   return (
-      <div className="bg-gradient-to-r from-zinc-200 to-lime-100 min-h-screen font-sans">
-        <Logo />
-        {display}
+      <div className="">
+        <div className="mx-2 bg-gradient-to-r from-zinc-200 to-lime-100 min-h-screen font-sans ">
+          <Logo />
+          {display}
+        </div>
       </div>
   );
 }

@@ -16,8 +16,8 @@ function UserProjGallery ({ allProj, showProj }) {
     const id = el.id;
     return (
       <tr className="bg-zinc-100">
-        <td className=" w-32 h-32 opacity-50 hover:opacity-100">          
-          <div id={id} onClick={(e) => showDetail(e)} className="bg-emerald-300 w-5/6 h-5/6 m-2 outline outline-2 rounded hover:shadow-2xl outline-2 outline-slate-300 cursor-pointer hover:outline-emerald-500 ">
+        <td className=" w-32 h-32 opacity-50 p-8 hover:opacity-100">          
+          <div id={id} onClick={(e) => showDetail(e)} className="bg-emerald-300 w-full h-full m-8 my-8 outline outline-2 rounded hover:shadow-2xl outline-2 outline-slate-300 cursor-pointer hover:outline-emerald-500 hover:scale-110 ">
             {title}
           </div>
         </td>
@@ -28,7 +28,7 @@ function UserProjGallery ({ allProj, showProj }) {
 
   return (
     <div className="flex justify-center">
-      <table className="table-auto outline outline-2 w-5/6 my-12 rounded shadow-2xl">
+      <table className="table-auto w-full mx-6 my-12 rounded shadow-2xl">
         <thead className="bg-slate-200">
           <tr className="h-12">
             <th></th>

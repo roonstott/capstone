@@ -41,3 +41,5 @@
 * _8:25 First commit of day_
 * _9:05 Working on sizing of user project gallery_
 * _10:15 Still working on styling of project gallery_
+* _10:56 Add userController method to switch to project detail view_
+* _12:05 Format project detail component and add text editing box_
