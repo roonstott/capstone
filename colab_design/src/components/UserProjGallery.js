@@ -3,20 +3,21 @@ import React from 'react';
 import { auth } from "./../firebase.js";
 import * as dbFunc from './DatabaseFunctions';
 
-function UserProjGallery ({ projOwned, projJoined}) {
+function UserProjGallery ({ allProj, showProj }) {
 
-  const showDetail = (id) => {
-
+  const showDetail = (event) => {
+    const id = event.target.id
+    showProj(id);
   }
 
-  let display = projOwned.map(el => {
+  let display = allProj.map(el => {
     const title = el.title; 
     const description = el.description;
     const id = el.id;
     return (
       <tr className="bg-zinc-100">
         <td className=" w-32 h-32 opacity-50 hover:opacity-100">          
-          <div id={id} onClick={(id) => showDetail(id)} className="bg-emerald-300 w-5/6 h-5/6 m-2 outline outline-2 rounded hover:shadow-2xl outline-2 outline-slate-300 cursor-pointer hover:outline-emerald-500 ">
+          <div id={id} onClick={(e) => showDetail(e)} className="bg-emerald-300 w-5/6 h-5/6 m-2 outline outline-2 rounded hover:shadow-2xl outline-2 outline-slate-300 cursor-pointer hover:outline-emerald-500 ">
             {title}
           </div>
         </td>
@@ -24,8 +25,6 @@ function UserProjGallery ({ projOwned, projJoined}) {
       </tr>     
     )
   })
-
-
 
   return (
     <div className="flex justify-center">

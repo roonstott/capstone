@@ -7,9 +7,7 @@ import UserController from './UserController';
 function App () {
 
   const [currentUser, setCurrentUser] = useState(auth.currentUser)
-  const [isLoading, setIsLoading] = useState(true)
-  
-  console.log("rendered app")
+  const [isLoading, setIsLoading] = useState(true)  
 
   let display;
   if (currentUser === null) {

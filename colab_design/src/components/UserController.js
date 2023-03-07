@@ -6,15 +6,18 @@ import Header from './Header';
 import UserCreateProj from './UserCreateProj';
 import UserProjGallery from './UserProjGallery'; 
 import YourProjects from './YourProjects';
+import ProjDetail from './ProjDetail';
 import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 
 function UserController ({ isLoading, setIsLoading}) {
-
   
   const [view, setView] = useState(null);
   const [newProject, setNewProject] = useState(null);
   const [projectsOwned, setProjectsOwned] = useState([]);
   const [projectsJoined, setProjectsJoined] = useState([]);
+  const [allProjects, setAllProjects] = useState([]);
+  const [projDetail, setProjDetail] = useState(null);
+  let display; 
 
   const uid = auth.currentUser.uid;  
 
@@ -30,16 +33,20 @@ function UserController ({ isLoading, setIsLoading}) {
             id: doc.id
           })
         });
-        setProjectsOwned(projects);
+        setAllProjects(projects);
         setIsLoading(false);
       }, (error) => {
         console.log(error); 
       }      
     );
     return () => unSubscribe();
-  }, [newProject])
+  }, [newProject]);
 
-  let display;   
+  const showDetail = (id) => {
+    const p = allProjects.filter(p =>p.id === id);
+    setProjDetail(p);
+    setView("detail");
+  }
   
   if(isLoading === true) {
     return (
@@ -47,19 +54,20 @@ function UserController ({ isLoading, setIsLoading}) {
     )
   } else {
     if(view === "gallery") {
-      display = <UserProjGallery projOwned={projectsOwned} projJoined={projectsJoined}/>
+      display = <UserProjGallery allProj={allProjects} showProj={showDetail}/>
     } else if(view === "create") {
       display = <UserCreateProj setView={setView} setNewProject={setNewProject} setIsLoading={setIsLoading}/>
     } else if(view === "yourProjects") {
       display = <YourProjects projOwned={projectsOwned} />
+    } else if(view === "detail") {
+      display = <ProjDetail proj={projDetail}/>
     } else {
-      display = <YourProjects projOwned={projectsOwned} />
+      display = <UserProjGallery allProj={allProjects} showProj={showDetail} />
     }
 
     return (
       <React.Fragment>
         <Header setView={setView}/>
-        <p>You have reached your account {auth.currentUser.email}</p>
         {display}
       </React.Fragment>
     );
