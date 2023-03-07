@@ -3,16 +3,21 @@ import * as dbFunc from './DatabaseFunctions';
 import { auth } from './../firebase';
 // import PropTypes from 'prop-types';
 
-function UserCreateProj () {
+function UserCreateProj ({setView, setNewProject, setIsLoading}) {
 
   const makeProject = async (event) => {
     event.preventDefault();
     const title = event.target.title.value;
     const description = event.target.description.value; 
     const owner = auth.currentUser.uid;
-    const invitations = ["fRwKpPioTAVN6RjHs89iAJl2JN93"];
-    dbFunc.makeProject(owner, title, description, invitations);
-  }  
+    const invitations = ["H8oomh2WY7ZfTI6BeUBIPi7wpF03"];
+    const docRef = dbFunc.makeProject(owner, title, description, invitations);
+    docRef.then(() => {
+      setIsLoading(true);
+      setView("gallery");
+      setNewProject(docRef)
+    })
+  }
 
   return (
     <React.Fragment>

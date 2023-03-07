@@ -3,17 +3,32 @@ import React from 'react';
 import { auth } from "./../firebase.js";
 import * as dbFunc from './DatabaseFunctions';
 
-function UserProjGallery () {
+function UserProjGallery ({ projOwned, projJoined}) {
 
-  const allProj = async () => {
-    const p = await dbFunc.getProjects(auth.currentUser.uid);
-    console.log("all projects: ", p.allProjects); 
-  }
+  // let display = projOwned.map(el => {
+  //     return ( 
+  //       <p>{el.title}</p>
+  //     )
+  //   });
 
-  allProj(); 
+  let display = projOwned.map(el => {
+    const title = el.title; 
+    const description = el.description;
+    return (
+      <div>
+        <p>{title}</p>
+        <p>{description}</p>
+      </div>
+    )
+  })
+
+
 
   return (
-    <p>Place Holder</p>
+    <div>
+      <p>These are projects</p>
+      {display}
+    </div>
   );
 }
 

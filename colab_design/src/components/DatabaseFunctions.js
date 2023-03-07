@@ -25,25 +25,26 @@ export const makeProject = async (ownerId, title, description, invitations) => {
   }
 
   const docRef = await addDoc(collection(db, "projects"), project);
-  const projId = docRef.id
   
-  //Add docId to invitees' 'projectsInvited' array
-  project.invitations.map(async(uid) => {
-    const userDocRef = doc(db, "users", uid);
+  //Add docRef to invitees' 'projectsInvited' array
+  // project.invitations.forEach(async(uid) => {
+    const userDocRef = doc(db, "users", invitations[0]);
     const userDocSnap = await getDoc(userDocRef); 
     const userDocData = userDocSnap.data();
-    const updatedProjInvite = userDocData.projectsInvited.concat(projId);
+    const updatedProjInvite = userDocData.projectsInvited.concat(docRef);
     const updatedUserDocData = {...userDocData, projectsInvited: updatedProjInvite};
     await updateDoc(userDocRef, updatedUserDocData);
-  });
+  // });
 
-  //Add project to owner's 'projectsOwned' array
+  //Add project docRef to owner's 'projectsOwned' array
   const ownerDocRef = doc(db, "users", ownerId);
   const ownerDocSnap = await getDoc(ownerDocRef)
   const ownerDocData = ownerDocSnap.data(); 
-  const updatedOwnerProjArray = ownerDocData.projectsOwned.concat(projId); 
+  const updatedOwnerProjArray = ownerDocData.projectsOwned.concat(docRef); 
   const updatedOwner = {...ownerDocData, projectsOwned: updatedOwnerProjArray };
-  await updateDoc(ownerDocRef, updatedOwner); 
+  await updateDoc(ownerDocRef, updatedOwner);
+
+  return docRef;
 }
 
 export const addCollaborator = async (projId, colabUid) => { //called each time an invitee accepts an invitation: 
