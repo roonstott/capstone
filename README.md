@@ -45,3 +45,4 @@
 * _12:05 Format project detail component and add text editing box_
 * _12:46 Format text editor_
 * _1:37 Adding 'add member' popup to project detail_
+* _2:30 Researching input dropdown search match suggestions_

@@ -1,4 +1,6 @@
 import React from 'react'
+import { collection, doc, getDoc, onSnapshot, getDocs } from "firebase/firestore";
+import { db } from './../firebase';
 
 function ProjDetail({ proj }) {
   const p = proj[0];
@@ -10,6 +12,25 @@ function ProjDetail({ proj }) {
 
   const closePopUp = () => {
     document.getElementById("participantPopUp").close()
+  }
+
+  const handleQueryMatches = async (event) => {
+    const input = event.target.value.toLowerCase();
+    const userRef = collection(db, "users");
+    const userData = await getDocs(userRef);
+    let matches = [];
+    userData.forEach(doc => {
+      if (
+        doc.data().firstName.toLowerCase().includes(input) ||
+        doc.data().lastName.toLowerCase().includes(input) ||
+        doc.data().email.toLowerCase().includes(input) &&
+        ! matches.includes(doc.data())
+      ) {
+        matches.push(doc.data())
+      }
+    })
+    console.log(matches)
+    
   }
 
   return (
@@ -30,7 +51,7 @@ function ProjDetail({ proj }) {
       </div>
       <dialog id="participantPopUp" className=" mx-20 w-1/2 border-slate-400 border-2">
         <label for="searchParticipants">Add Members</label>
-        <input id="searchParticipants" name="searchParticipants" className="m-4 p-2"></input>
+        <input onChange={(e) => handleQueryMatches(e)}id="searchParticipants" name="searchParticipants" className="m-4 p-2"/>
         <table>
           <thead>
             <tr>
