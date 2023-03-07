@@ -36,3 +36,6 @@
 * _5:08 Still working on user authentication and authorization_
 * _5:50 Done for day. WIP: Authorization and Authentication_
 
+#### Tuesday, 3/7
+
+* _8:25 First commit of day_
