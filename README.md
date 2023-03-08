@@ -54,3 +54,4 @@
 #### Wednesday, 3/8
 
 * _8:50 Reading about d3.js_
+* _09:45 Formatting the YourProjects component_

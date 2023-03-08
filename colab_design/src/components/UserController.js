@@ -66,7 +66,7 @@ function UserController ({ isLoading, setIsLoading}) {
     } else if(view === "create") {
       display = <UserCreateProj setView={setView} setNewProject={setNewProject} setIsLoading={setIsLoading}/>
     } else if(view === "yourProjects") {
-      display = <YourProjects projOwned={projectsOwned} />
+      display = <YourProjects projOwned={projectsOwned} showProj={showDetail}/>
     } else if(view === "detail") {
       display = <ProjDetail proj={projDetail}/>
     } else {
