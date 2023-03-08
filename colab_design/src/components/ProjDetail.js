@@ -5,9 +5,43 @@ import * as dbFunc from './DatabaseFunctions';
 import ParticipantSideBar from './ParticipantSideBar';
 
 function ProjDetail({ proj }) {
-  const p = proj[0];
-  const title = p.title;
-  const [matches, setMatches] = useState([])  
+  const project = proj[0];
+  const title = project.title;
+
+  const [matches, setMatches] = useState([]);
+  const [invites, setInvites] = useState(null);
+  const [colabs, setColabs] = useState(null);
+
+  let sideBar; 
+
+  if (invites && colabs) {
+    sideBar = <ParticipantSideBar invites={invites} colabs={colabs} />
+  }
+
+  const getColabs = () => {
+    const localColabArray = [];
+    project.collaborators.forEach(async colabUid => {
+      const userRef = doc(db, "users", colabUid);
+      const user = await getDoc(userRef);
+      localColabArray.push(user.data())
+    });
+    setColabs(localColabArray);
+  }
+
+  const getInvited = () => {
+    const localInviteArray = [];
+    project.invitations.forEach(async colabUid => {
+      const userRef = doc(db, "users", colabUid);
+      const user = await getDoc(userRef);
+      localInviteArray.push(user.data());    
+    });
+    setInvites(localInviteArray);
+  }
+
+  useEffect(() => {
+    getColabs();
+    getInvited();
+  }, []);
 
   const openPopUp = () => {
     document.getElementById("participantPopUp").showModal();
@@ -37,7 +71,7 @@ function ProjDetail({ proj }) {
   const handleAddingParticipant = (event) => {   
     event.preventDefault(); 
     const uid = event.target.id; 
-    dbFunc.inviteCollaborator(p.id, uid); 
+    dbFunc.inviteCollaborator(project.id, uid); 
     closePopUp();
   }
 
@@ -69,14 +103,10 @@ function ProjDetail({ proj }) {
           </div>
             <p className="min-h-screen bg-white p-12 " contentEditable="true">Start your project</p>
         </div>
-        <div className='basis-1/4'>
-          <ParticipantSideBar proj={proj} />
+        <div className='basis-1/4'>          
+          {sideBar}
         </div>
       </div>
-
-
-
-
 
       {/* Dialog Bar: Separate From Default Page Render */}
       <dialog id="participantPopUp" className=" mx-20 w-2/3 h-1/2 border-slate-400 border-2">

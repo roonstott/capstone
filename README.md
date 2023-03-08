@@ -58,3 +58,4 @@
 * _10:36 Start component for participant sidebar navigator_
 * _11:29 Formatting component ParticipantSideBar_
 * _12:32 Working on db function to display project collaborators and invitees in 'ParticipantSideBar'_
+* _1:34 WIP: Struggling to get 'ParticipantSideBar' component to re-render after props change_
