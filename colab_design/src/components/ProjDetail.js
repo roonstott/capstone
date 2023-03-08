@@ -1,4 +1,4 @@
-import React { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { collection, doc, getDoc, onSnapshot, getDocs } from "firebase/firestore";
 import { db } from './../firebase';
 
@@ -6,7 +6,7 @@ function ProjDetail({ proj }) {
   const p = proj[0];
   const title = p.title;
 
-  const [divEl, setDivEl] = useState(null)
+  const [matches, setMatches] = useState([])  
 
   const openPopUp = () => {
     document.getElementById("participantPopUp").showModal();
@@ -21,24 +21,36 @@ function ProjDetail({ proj }) {
     const userRef = collection(db, "users");
     const userData = await getDocs(userRef);
     let matches = [];
-    userData.forEach(doc => {
-      if (
-        (doc.data().firstName.toLowerCase().includes(input) || (doc.data().lastName.toLowerCase().includes(input)) || (doc.data().email.toLowerCase().includes(input))) && (! matches.includes(doc.data()))
-      ) {
-        matches.push(doc.data())
-      }      
-    })
-    const divEl = matches.map(el => {
-      return (
-        <div>
-          <p> {el.firstName} {el.lastName} {el.email}</p>
-        </div>
-      )
-    })
-    return divEl;
+    if(input !== "") {    
+      userData.forEach(doc => {
+        if (
+          (doc.data().firstName.toLowerCase().includes(input) || (doc.data().lastName.toLowerCase().includes(input)) || (doc.data().email.toLowerCase().includes(input))) && (! matches.includes(doc.data()))
+        ) {
+          matches.push(doc.data())
+        }      
+      })
+    }
+    setMatches(matches); 
   }
 
-  const placeDivEl = {}
+  const handleAddingParticipant = (event) => {
+    event.preventDefault()
+  }
+
+    const matchDivs = () => {
+     return matches.map(el=> {
+        if (matches.length === 0) {
+          return <div></div>
+        } else {
+          return (
+            <div id={el.id} onClick={(e) => handleAddingParticipant(e)} className="text-sm hover:text-lg flex p-2 cursor-pointer">
+              <div className="bg-emerald-400 w-3 h-3 rounded mx-1 align-center"></div>
+              <p className="text-center">{el.firstName} {el.lastName} {el.email} </p>
+            </div>
+          )
+        }
+      })
+    } 
 
   return (
     <React.Fragment>
@@ -56,32 +68,19 @@ function ProjDetail({ proj }) {
 
         </div>
       </div>
-      <dialog id="participantPopUp" className=" mx-20 w-2/3 border-slate-400 border-2">
+      <dialog id="participantPopUp" className=" mx-20 w-2/3 h-1/2 border-slate-400 border-2">
         <div className='flex'>
-          <div className="basis-3/6">
+          <div className="basis-5/6">
             <label for="searchParticipants">Add Members</label>
-            <input onChange={(e) => handleQueryMatches(e)} id="searchParticipants" name="searchParticipants" className="m-4 p-2"/>
-            <div id="matches">
-
+            <input onChange={(e) => handleQueryMatches(e)} id="searchParticipants" name="searchParticipants" className="m-4 p-2 border-2"/>
+            <div id="matches">              
+              {matchDivs()}
             </div>
-          </div>
-          <div className="basis-2/6">
-            <table>
-              <thead>
-                <tr>
-                  <td>Participants</td>
-                </tr>
-              </thead>
-              <tbody>
-                {/* place participants  */}
-              </tbody>
-            </table>
-          </div>
+          </div>          
           <div className='basis-1/6 flex items-end'>
             <button onClick={closePopUp}className="align-self-end w-20 h-8 bg-red-300 border-slate-400 rounded px-4 py-1 text-align-center">Close</button>
           </div>          
-        </div>        
-        
+        </div>       
       </dialog>
       
     </React.Fragment>
