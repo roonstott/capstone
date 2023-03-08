@@ -55,3 +55,4 @@
 
 * _8:50 Reading about d3.js_
 * _09:45 Formatting the YourProjects component_
+* _10:36 Start component for participant sidebar navigator_
