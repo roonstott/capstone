@@ -1,9 +1,10 @@
 import React from 'react'
 
 function ParticipantSideBar() {
+
   return (
     <React.Fragment>
-      <div className='flex'>
+      <div className='flex bg-red-200 w-10 h-10'>
         <table>
           <thead>
             <tr>

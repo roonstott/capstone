@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { collection, doc, getDoc, onSnapshot, getDocs } from "firebase/firestore";
 import { db } from './../firebase';
 import * as dbFunc from './DatabaseFunctions';
+import ParticipantSideBar from './ParticipantSideBar';
 
 function ProjDetail({ proj }) {
   const p = proj[0];
@@ -57,20 +58,27 @@ function ProjDetail({ proj }) {
 
   return (
     <React.Fragment>
-      <div className="min-h-full mx-20 max-w-screen-md my-12">
-        <div className="max-w-screen-md min-w-full place-self-center">
+      <div className="flex justify-around p-8 my-12">
+        <div className="basis-3/4 min-h-full mx-8 min-w-fit max-w-screen-md">
           <div className="bg-slate-100 h-16 drop-shadow-md flex justify-around">
             <h3 className="basis-1/2 text-align-center p-4 text-2xl">{title}</h3>
             <div className="basis-1/2 flex justify-end">
-            <button onClick={openPopUp} className=" bg-slate-200 m-2 h-12 w-auto text-align-center p-2 hover:text-lg hover:drop-shadow-xl">participants</button>
+              <button onClick={openPopUp} className=" bg-slate-200 m-2 h-12 w-auto text-align-center p-2 hover:text-lg hover:drop-shadow-xl">participants</button>
               <button className=" bg-emerald-400 m-2 h-12 w-20 text-align-center p-2 hover:text-lg hover:drop-shadow-xl">Save</button>
             </div>
-          </div>   
-
-          <p className="min-h-screen bg-white p-12 " contentEditable="true">Start your project</p>
-
+          </div>
+            <p className="min-h-screen bg-white p-12 " contentEditable="true">Start your project</p>
+        </div>
+        <div className='basis-1/4'>
+          <ParticipantSideBar />
         </div>
       </div>
+
+
+
+
+
+      {/* Dialog Bar: Separate From Default Page Render */}
       <dialog id="participantPopUp" className=" mx-20 w-2/3 h-1/2 border-slate-400 border-2">
         <div className='flex'>
           <div className="basis-5/6">
