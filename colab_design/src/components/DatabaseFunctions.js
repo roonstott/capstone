@@ -3,6 +3,7 @@ import { collection, addDoc, doc, setDoc, updateDoc, getDoc } from "firebase/fir
 
 export const makeUser = async (uid, e, first, last) => { //called once on account creation
   const profile = {
+    id: uid,
     firstName: first,
     lastName: last,
     email: e, 
@@ -66,6 +67,17 @@ export const addCollaborator = async (projId, colabUid) => { //called each time 
   const updatedUserColabs = userData.projectsJoined.concat(projId);
   const updatedUser = { ...userData, projectsInvited: updatedUserInvitations, projectsJoined: updatedUserColabs };
   await updateDoc(userRef, updatedUser);
+}
+
+export const inviteCollaborator = async (projId, colabUid) => {
+  const userRef = doc(db, "users", colabUid);
+  const userSnap = await getDoc(userRef);
+  const userData = userSnap.data();
+  if(!userData.projectsInvited.includes(projId)) {
+    const updatedUserInvitations = userData.projectsInvited.concat(projId);
+    const updatedUser = {...userData, projectsInvited: updatedUserInvitations}
+    await updateDoc(userRef, updatedUser);
+  }  
 }
 
 //Still need a function to invite a user to a project after it is made 'Send Invitation'

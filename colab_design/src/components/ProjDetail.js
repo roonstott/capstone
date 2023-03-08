@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { collection, doc, getDoc, onSnapshot, getDocs } from "firebase/firestore";
 import { db } from './../firebase';
+import * as dbFunc from './DatabaseFunctions';
 
 function ProjDetail({ proj }) {
   const p = proj[0];
@@ -33,8 +34,12 @@ function ProjDetail({ proj }) {
     setMatches(matches); 
   }
 
-  const handleAddingParticipant = (event) => {
-    event.preventDefault()
+  const handleAddingParticipant = (event) => {   
+    event.preventDefault(); 
+    const uid = event.target.id; 
+    console.log("joe's id exists ", uid)
+    dbFunc.inviteCollaborator(p.id, event.id)
+    closePopUp();
   }
 
     const matchDivs = () => {
@@ -43,10 +48,10 @@ function ProjDetail({ proj }) {
           return <div></div>
         } else {
           return (
-            <div id={el.id} onClick={(e) => handleAddingParticipant(e)} className="text-sm hover:text-lg flex p-2 cursor-pointer">
+            <form id={el.id} onSubmit={(e) => handleAddingParticipant(e)} className="text-sm hover:text-lg flex p-2 cursor-pointer">
               <div className="bg-emerald-400 w-3 h-3 rounded mx-1 align-center"></div>
-              <p className="text-center">{el.firstName} {el.lastName} {el.email} </p>
-            </div>
+              <button className="text-center">{el.firstName} {el.lastName} {el.email} {el.id}</button>              
+            </form>
           )
         }
       })

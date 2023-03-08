@@ -48,3 +48,4 @@
 * _2:30 Researching input dropdown search match suggestions_
 * _3:39 Still working on input dropdown search match suggestions_
 * _4:26 Finish with dropdown suggestions, now linking to db udpate function_
+* _5:18 Write function to update db with user invitation_
