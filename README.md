@@ -57,3 +57,4 @@
 * _09:45 Formatting the YourProjects component_
 * _10:36 Start component for participant sidebar navigator_
 * _11:29 Formatting component ParticipantSideBar_
+* _12:32 Working on db function to display project collaborators and invitees in 'ParticipantSideBar'_
