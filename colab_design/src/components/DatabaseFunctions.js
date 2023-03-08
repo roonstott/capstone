@@ -1,13 +1,14 @@
 import { db } from './../firebase';
 import { collection, addDoc, doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
 
-export const makeUser = async (uid, e, first, last) => { //called once on account creation
+//called once on account creation
+
+export const makeUser = async (uid, e, first, last) => { 
   const profile = {
     id: uid,
     firstName: first,
     lastName: last,
     email: e, 
-    collaborators: [], //array of id's to be updated as user adds collaborators
     projectsOwned: [], //array of id's to be updated as user makes projects
     projectsInvited: [], //array of id's to be updated as user is invited to projects
     projectsJoined: [] //array of id's to be updated as user accepts project invitations
@@ -15,40 +16,36 @@ export const makeUser = async (uid, e, first, last) => { //called once on accoun
   await setDoc(doc(db, "users", uid), profile);  
 }
 
-export const makeProject = async (ownerId, title, description, invitations) => { //called each time a user makes a project
+//called each time a user makes a project
+
+export const makeProject = async (ownerId, title, description) => { 
   const project = {
     ownerId,
     title,
     description,
-    invitations, //array of uid's
+    invitations: [], //empty array to be filled with uid as invitations are extended
     collaborators: [], //empy array to be filled with uid's as invitees accept
     editHistory: [] //empy array to be updated as people add edits
   }
 
   const docRef = await addDoc(collection(db, "projects"), project);
-  
-  //Add docRef to invitees' 'projectsInvited' array
-  // project.invitations.forEach(async(uid) => {
-    const userDocRef = doc(db, "users", invitations[0]);
-    const userDocSnap = await getDoc(userDocRef); 
-    const userDocData = userDocSnap.data();
-    const updatedProjInvite = userDocData.projectsInvited.concat(docRef);
-    const updatedUserDocData = {...userDocData, projectsInvited: updatedProjInvite};
-    await updateDoc(userDocRef, updatedUserDocData);
-  // });
+  const projId = docRef.id
 
-  //Add project docRef to owner's 'projectsOwned' array
+  //Add project projId to owner's 'projectsOwned' array
   const ownerDocRef = doc(db, "users", ownerId);
   const ownerDocSnap = await getDoc(ownerDocRef)
   const ownerDocData = ownerDocSnap.data(); 
-  const updatedOwnerProjArray = ownerDocData.projectsOwned.concat(docRef); 
+  const updatedOwnerProjArray = ownerDocData.projectsOwned.concat(projId); 
   const updatedOwner = {...ownerDocData, projectsOwned: updatedOwnerProjArray };
   await updateDoc(ownerDocRef, updatedOwner);
 
   return docRef;
 }
 
-export const addCollaborator = async (projId, colabUid) => { //called each time an invitee accepts an invitation: 
+
+//called each time an invitee accepts an invitation: 
+
+export const addCollaborator = async (projId, colabUid) => { 
   
   //update project so that colabUid is removed from invitations and added to collaborators
   const projRef = doc(db, "projects", projId );
@@ -69,6 +66,8 @@ export const addCollaborator = async (projId, colabUid) => { //called each time 
   await updateDoc(userRef, updatedUser);
 }
 
+//called when a collaborator is invited to a project. Both adds projId to user invitations array, and adds userId to proj invitations array
+
 export const inviteCollaborator = async (projId, colabUid) => {
   const userRef = doc(db, "users", colabUid);
   const userSnap = await getDoc(userRef);
@@ -77,10 +76,17 @@ export const inviteCollaborator = async (projId, colabUid) => {
     const updatedUserInvitations = userData.projectsInvited.concat(projId);
     const updatedUser = {...userData, projectsInvited: updatedUserInvitations}
     await updateDoc(userRef, updatedUser);
-  }  
+  }
+  const projRef = doc(db, "projects", projId);
+  const projSnap = await getDoc(projRef); 
+  const projData = projSnap.data(); 
+  if(!projData.invitations.includes(colabUid)) {
+    const updatedInvitations = projData.invitations.concat(colabUid); 
+    const updatedProj = {...projData, invitations: updatedInvitations}
+    await updateDoc(projRef, updatedProj);
+  }
 }
 
-//Still need a function to invite a user to a project after it is made 'Send Invitation'
 
 //Uplaod documents to project
 

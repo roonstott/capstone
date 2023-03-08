@@ -10,8 +10,7 @@ function UserCreateProj ({setView, setNewProject, setIsLoading}) {
     const title = event.target.title.value;
     const description = event.target.description.value; 
     const owner = auth.currentUser.uid;
-    const invitations = ["H8oomh2WY7ZfTI6BeUBIPi7wpF03"];
-    const docRef = dbFunc.makeProject(owner, title, description, invitations);
+    const docRef = dbFunc.makeProject(owner, title, description);
     docRef.then(() => {
       setIsLoading(true);
       setView("gallery");

@@ -15,6 +15,7 @@ function UserController ({ isLoading, setIsLoading}) {
   const [newProject, setNewProject] = useState(null);
   const [projectsOwned, setProjectsOwned] = useState([]);
   const [projectsJoined, setProjectsJoined] = useState([]);
+  const [projectsInvited, setProjectsInvited] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
   const [projDetail, setProjDetail] = useState(null);
   let display; 
@@ -25,15 +26,22 @@ function UserController ({ isLoading, setIsLoading}) {
     const unSubscribe = onSnapshot(
       collection(db, "projects"),
       (collectionSnapshot) => {
-        const projects = [];
+        const projOwned = [];
+        const projInvited = [];
+        const projJoined= [];
         collectionSnapshot.forEach((doc) => {
-          projects.push({
-            title: doc.data().title,
-            description: doc.data().description, 
-            id: doc.id
-          })
+          if(doc.data().ownerId === uid) {
+            projOwned.push({...doc.data(), id:doc.id})
+          } else if(doc.data().invitations.includes(uid)) {
+            projInvited.push({...doc.data(), id:doc.id})
+          } else if(doc.data().collaborators.includes(uid)) {
+            projJoined.push({...doc.data(), id:doc.id})
+          }
         });
-        setAllProjects(projects);
+        setProjectsOwned(projOwned);
+        setProjectsJoined(projJoined);
+        setProjectsInvited(projInvited)
+        setAllProjects([...projOwned, ...projJoined]);
         setIsLoading(false);
       }, (error) => {
         console.log(error); 

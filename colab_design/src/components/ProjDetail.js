@@ -6,7 +6,6 @@ import * as dbFunc from './DatabaseFunctions';
 function ProjDetail({ proj }) {
   const p = proj[0];
   const title = p.title;
-
   const [matches, setMatches] = useState([])  
 
   const openPopUp = () => {
@@ -37,8 +36,7 @@ function ProjDetail({ proj }) {
   const handleAddingParticipant = (event) => {   
     event.preventDefault(); 
     const uid = event.target.id; 
-    console.log("joe's id exists ", uid)
-    dbFunc.inviteCollaborator(p.id, event.id)
+    dbFunc.inviteCollaborator(p.id, uid); 
     closePopUp();
   }
 
@@ -50,7 +48,7 @@ function ProjDetail({ proj }) {
           return (
             <form id={el.id} onSubmit={(e) => handleAddingParticipant(e)} className="text-sm hover:text-lg flex p-2 cursor-pointer">
               <div className="bg-emerald-400 w-3 h-3 rounded mx-1 align-center"></div>
-              <button className="text-center">{el.firstName} {el.lastName} {el.email} {el.id}</button>              
+              <button className="text-center">{el.firstName} {el.lastName} {el.email}</button>              
             </form>
           )
         }
@@ -76,7 +74,7 @@ function ProjDetail({ proj }) {
       <dialog id="participantPopUp" className=" mx-20 w-2/3 h-1/2 border-slate-400 border-2">
         <div className='flex'>
           <div className="basis-5/6">
-            <label for="searchParticipants">Add Members</label>
+            <label Htmlfor="searchParticipants">Add Members</label>
             <input onChange={(e) => handleQueryMatches(e)} id="searchParticipants" name="searchParticipants" className="m-4 p-2 border-2"/>
             <div id="matches">              
               {matchDivs()}

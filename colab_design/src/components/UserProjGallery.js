@@ -6,18 +6,19 @@ import * as dbFunc from './DatabaseFunctions';
 function UserProjGallery ({ allProj, showProj }) {
 
   const showDetail = (event) => {
-    const id = event.target.id
-    showProj(id);
+    event.preventDefault(); 
+    const projId = event.target.id;
+    showProj(projId);
   }
 
   let display = allProj.map(el => {
-    const title = el.title; 
+    const title = el.title;
     const description = el.description;
-    const id = el.id;
+    const projId = el.id;
     return (
       <tr className="bg-zinc-100">
         <td className=" w-32 h-32 opacity-50 p-8 hover:opacity-100">          
-          <div id={id} onClick={(e) => showDetail(e)} className="bg-emerald-300 w-full h-full m-8 my-8 outline outline-2 rounded hover:shadow-2xl outline-2 outline-slate-300 cursor-pointer hover:outline-emerald-500 hover:scale-110 ">
+          <div id={projId} onClick={(e) => showDetail(e)} className="bg-emerald-300 w-full h-full m-8 my-8 outline outline-2 rounded hover:shadow-2xl outline-2 outline-slate-300 cursor-pointer hover:outline-emerald-500 hover:scale-110 ">
             {title}
           </div>
         </td>
