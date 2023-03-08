@@ -59,3 +59,4 @@
 * _11:29 Formatting component ParticipantSideBar_
 * _12:32 Working on db function to display project collaborators and invitees in 'ParticipantSideBar'_
 * _1:34 WIP: Struggling to get 'ParticipantSideBar' component to re-render after props change_
+* _2:10 Researching React component lifecycle_ 

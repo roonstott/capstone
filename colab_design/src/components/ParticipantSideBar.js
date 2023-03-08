@@ -1,12 +1,37 @@
 import React, { useState, useEffect } from 'react';
 // import { db } from './../firebase';
-// import { collection, doc, getDoc, onSnapshot, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot, getDocs } from "firebase/firestore";
+import SideBarSubList from './SideBarSubList';
 
 function ParticipantSideBar({ invites, colabs }) {
 
-  console.log("colabs ", colabs); 
+  const [invites, setInvites] = useState(null);
+  const [colabs, setColabs] = useState(null);  
 
-  console.log("invites ", invites);  
+  const getColabs = () => {
+    const localColabArray = [];
+    project.collaborators.forEach(async colabUid => {
+      const userRef = doc(db, "users", colabUid);
+      const user = await getDoc(userRef);
+      localColabArray.push(user.data())
+    });
+    setColabs(localColabArray);
+  }
+
+  const getInvited = () => {
+    const localInviteArray = [];
+    project.invitations.forEach(async colabUid => {
+      const userRef = doc(db, "users", colabUid);
+      const user = await getDoc(userRef);
+      localInviteArray.push(user.data());    
+    });
+    setInvites(localInviteArray);
+  }
+
+  useEffect(() => {
+    getColabs();
+    getInvited();
+  }, []);
 
     const colabDisplay = invites.map(el => {
       console.log("first name ", el.firstName)

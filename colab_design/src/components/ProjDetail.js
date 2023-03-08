@@ -8,40 +8,7 @@ function ProjDetail({ proj }) {
   const project = proj[0];
   const title = project.title;
 
-  const [matches, setMatches] = useState([]);
-  const [invites, setInvites] = useState(null);
-  const [colabs, setColabs] = useState(null);
-
-  let sideBar; 
-
-  if (invites && colabs) {
-    sideBar = <ParticipantSideBar invites={invites} colabs={colabs} />
-  }
-
-  const getColabs = () => {
-    const localColabArray = [];
-    project.collaborators.forEach(async colabUid => {
-      const userRef = doc(db, "users", colabUid);
-      const user = await getDoc(userRef);
-      localColabArray.push(user.data())
-    });
-    setColabs(localColabArray);
-  }
-
-  const getInvited = () => {
-    const localInviteArray = [];
-    project.invitations.forEach(async colabUid => {
-      const userRef = doc(db, "users", colabUid);
-      const user = await getDoc(userRef);
-      localInviteArray.push(user.data());    
-    });
-    setInvites(localInviteArray);
-  }
-
-  useEffect(() => {
-    getColabs();
-    getInvited();
-  }, []);
+  const [matches, setMatches] = useState([]);  
 
   const openPopUp = () => {
     document.getElementById("participantPopUp").showModal();
