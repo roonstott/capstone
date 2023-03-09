@@ -72,3 +72,4 @@
 * _9:20 using date-fn to sort projects and display newest first_
 * _10:30 Touching up formatting_
 * _11:30 Still working on styling_
+* _12:06 More styling. Add setTimeout to popup window to close signInSuccess popUp after 1 sec_

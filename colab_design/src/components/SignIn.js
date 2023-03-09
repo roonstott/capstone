@@ -80,7 +80,12 @@ class SignIn extends React.Component {
   popUp = () => {
     if(this.state.signInMessage !== "") {
       document.getElementById("popUp").showModal();
-    }    
+    }
+    if(this.state.signInSuccess) {
+      setInterval(() => {
+        this.goToAccount()
+      }, 1000)
+    }
   }
 
   goToAccount = () => {
@@ -106,14 +111,28 @@ class SignIn extends React.Component {
     document.getElementById("popUp").close();
   }
 
-  button = () => {
+  popUpContent = () => {
     if(this.state.signInSuccess) {
       return (
-        <button className="bg-red-300 border-slate-400 rounded px-4 py-1" type="click" onClick={() => this.goToAccount()}>Go To Your Account</button>
+        <div>
+          <div className='flex justify-end bg-slate-100 h-8'>
+            <button className="text-lg px-4 py-1" type="click" onClick={() => this.goToAccount()}>X</button>
+          </div>
+          <div className=' h-fit flex items-center my-8'>
+            <p className='text-center'>{this.state.signInMessage}</p>        
+          </div>              
+        </div>        
       )
     } else {
       return (
-        <button className="bg-red-300 border-slate-400 rounded px-4 py-1" type="click" onClick={() => this.resetSignIn()}>Try Again</button>
+        <div>          
+          <div className=' h-fit flex items-center my-8'>
+            <p className='text-center'>{this.state.signInMessage}</p>        
+          </div> 
+          <div className=''>
+            <button className="bg-red-300 border-slate-400 rounded px-4 py-1" type="click" onClick={() => this.resetSignIn()}>Try Again</button>
+          </div>             
+        </div>               
       )
     }
   }
@@ -131,7 +150,7 @@ class SignIn extends React.Component {
           <div className='flex justify-center basis-3/4'>            
             <div className="grid grid-cols-1 justify-items-center w-2/3 my-6 p-6 justify-center bg-zinc-50 shadow-xl">
               <h1 className="text-cyan-700 text-center text-xl py-2">Sign In</h1>            
-              <form className='py-2' onSubmit={(e) => this.doSignIn(e)}>
+              <form className='grid grid-cols-1 justify-items-center py-2' onSubmit={(e) => this.doSignIn(e)}>
                 <div>
                   <label className='my-1' htmlFor="email">Email Address</label>
                   <input className='m-2 px-2 py-1 outline outline-blue-200 hover:drop-shadow-md rounded-sm' type="text" name="email" placeholder='Email Address' />
@@ -140,17 +159,16 @@ class SignIn extends React.Component {
                   <label className='m-2' htmlFor="password">Password</label>
                   <input className='m-2 px-2 py-1 outline outline-blue-200 hover:drop-shadow-md rounded-sm' type="text" name="password" placeholder='Password' />
                 </div>
-                <div className='flex justify-center'>
-                  <button className="justify-center bg-cyan-500 opacity-90 border-slate-400 rounded px-4 my-4 py-1 px-8 w-fit hover:drop-shadow-xl" type="submit">Sign In</button>
-                </div>
-                <p className='my-3'>- OR -</p>
+                <div>
+                  <button className="bg-cyan-500 opacity-90 border-slate-400 rounded px-4 my-4 py-1 px-8 w-fit hover:drop-shadow-xl" type="submit">Sign In</button>
+                </div>              
               </form>
+              <p className='my-3'>- OR -</p>
               <button className="bg-slate-300 border-slate-400 rounded px-4 my-3 p-1 w-fit hover:drop-shadow-xl" onClick={() => this.showSignUp()}>Create a new account</button>
             </div>
           </div>
-          <dialog id="popUp">
-            <p>{this.state.signInMessage}</p>
-            {this.button()}
+          <dialog className='w-1/2' id="popUp">            
+              {this.popUpContent()}                      
           </dialog>
           {this.popUp()}
         </React.Fragment>

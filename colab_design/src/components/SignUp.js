@@ -45,7 +45,7 @@ function SignUp (props) {
   return (
     <React.Fragment>
       <div className='flex justify-center basis-3/4'>
-        <div className='grid grid-cols-1 justify-items-center basis-2/3 my-6 p-6 justify-center bg-zinc-50 shadow-xl'>
+        <div className='grid grid-cols-1 justify-items-center basis-2/3 my-6 p-6 bg-zinc-50 shadow-xl'>
           <h1 className='text-cyan-700 text-lg'>Create An Account</h1>
           <form className='py-2' onSubmit={(e) => doSignUp(e)}>
             <div>
@@ -68,7 +68,10 @@ function SignUp (props) {
               <label className='m-2' htmlFor="last">Last Name</label>
               <input className='m-2 px-2 py-1 outline outline-blue-200 hover:drop-shadow-md rounded-sm' type="text" name="last" placeholder='Last Name'></input>
             </div>
-            <button className="bg-cyan-500 opacity-90 border-slate-400 rounded px-4 my-4 py-1 px-8 w-fit hover:drop-shadow-xl" type="submit">Register</button>
+            <div className='flex justify-center'>
+              <button className="bg-cyan-500 opacity-90 border-slate-400 rounded px-4 my-4 py-1 px-8 w-fit hover:drop-shadow-xl" type="submit">Register</button>
+            </div>
+            
           </form>          
         </div>        
       </div>
