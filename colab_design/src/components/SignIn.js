@@ -127,16 +127,18 @@ class SignIn extends React.Component {
     } else {
       return (
         <React.Fragment>
-          <div>
-            <h1 className="text-orange-600">Sign In</h1>            
-            <form onSubmit={(e) => this.doSignIn(e)}>
-              <label htmlFor="email">Email Address</label>
-              <input type="text" name="email" placeholder='Email Address' />
-              <label htmlFor="password">Password</label>
-              <input type="text" name="password" placeholder='Password' />
-              <button className="bg-red-300 border-slate-400 rounded px-4 py-1" type="submit">Sign In</button>
-            </form>
-            <button className="bg-red-300 border-slate-400 rounded px-4 py-1" onClick={() => this.showSignUp()}>Create a new account</button>
+          <div className='flex justify-center basis-3/4'>
+            <div className="flex flex-col basis-3/4 py-6 justify-center">
+              <h1 className="text-orange-600 text-center py-6">Sign In</h1>            
+              <form className='flex flex-col py-6' onSubmit={(e) => this.doSignIn(e)}>
+                <label htmlFor="email">Email Address</label>
+                <input type="text" name="email" placeholder='Email Address' />
+                <label htmlFor="password">Password</label>
+                <input type="text" name="password" placeholder='Password' />
+                <button className="bg-red-300 border-slate-400 rounded px-4 py-1 w-40" type="submit">Sign In</button>
+              </form>
+              <button className="bg-red-300 border-slate-400 rounded px-4 py-1 w-40" onClick={() => this.showSignUp()}>Create a new account</button>
+            </div>
           </div>
           <dialog id="popUp">
             <p>{this.state.signInMessage}</p>

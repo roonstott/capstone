@@ -70,3 +70,4 @@
 
 * _8:18 Adding timestamp to new documents in order to display by date created_
 * _9:20 using date-fn to sort projects and display newest first_
+* _10:30 Touching up formatting_

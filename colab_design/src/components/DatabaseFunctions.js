@@ -19,10 +19,12 @@ export const makeUser = async (uid, e, first, last) => {
 //called each time a user makes a project
 
 export const makeProject = async (ownerId, title, description) => {  
+
+  const titleVal = (title !== "" ? title : "untitled") 
   
   const project = {
     ownerId,
-    title,
+    title: titleVal,
     description,
     dateCreated: serverTimestamp(),
     invitations: [], //empty array to be filled with uid as invitations are extended
