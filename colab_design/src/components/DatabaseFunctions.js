@@ -1,5 +1,5 @@
 import { db } from './../firebase';
-import { collection, addDoc, doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
+import { collection, addDoc, doc, setDoc, updateDoc, getDoc, serverTimestamp } from "firebase/firestore";
 
 //called once on account creation
 
@@ -18,11 +18,13 @@ export const makeUser = async (uid, e, first, last) => {
 
 //called each time a user makes a project
 
-export const makeProject = async (ownerId, title, description) => { 
+export const makeProject = async (ownerId, title, description) => {  
+  
   const project = {
     ownerId,
     title,
     description,
+    dateCreated: serverTimestamp(),
     invitations: [], //empty array to be filled with uid as invitations are extended
     collaborators: [], //empy array to be filled with uid's as invitees accept
     editHistory: [] //empy array to be updated as people add edits
@@ -91,9 +93,20 @@ export const inviteCollaborator = async (projId, colabUid) => {
   }
 }
 
+const saveChanges = (projId, editorId, parentId) => {
+  
+}
 
-//Uplaod documents to project
+export const formatDate = (dateObj) => {
+  const day = dateObj.getDay(); 
+  const month = dateObj.getMonth(); 
+  const date = dateObj.getDate();
+  const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const monthArray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-//Create an edit and add it to the project edit history array
+  return (
+    `${dayArray[day]}, ${monthArray[month]} ${date}`
+  )
+}
  
 

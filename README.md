@@ -65,3 +65,8 @@
 * _9:47 Add invitation popUp to be shown once on login_
 * _10:56 Add functionality to add invitations. Fine tune logic of invitation popUp box_
 * _11:10 Add logic to prevent users from sending invitations to project owner or current collaborators_
+
+#### Thursday, 3/09
+
+* _8:18 Adding timestamp to new documents in order to display by date created_
+* _9:20 using date-fn to sort projects and display newest first_

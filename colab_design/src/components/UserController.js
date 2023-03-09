@@ -34,13 +34,21 @@ function UserController () {
         const projInvited = [];
         const projJoined= [];
         collectionSnapshot.forEach((doc) => {
-          if(doc.data().ownerId === uid) {
-            projOwned.push({...doc.data(), id:doc.id})
+          if(doc.data().ownerId === uid) {          
+            const timeOpen = doc.get('dateCreated', {serverTimestamps: "estimate"}).toDate();
+            const jsDate = new Date(timeOpen); 
+            projOwned.push({...doc.data(), id:doc.id, dateCreated:jsDate})
           } 
           if(doc.data().invitations.includes(uid)) {
+            const timeOpen = doc.get('dateCreated', {serverTimestamps: "estimate"}).toDate();
+            const jsDate = new Date(timeOpen); 
+            projOwned.push({...doc.data(), id:doc.id, dateCreated:jsDate})
             projInvited.push({...doc.data(), id:doc.id})
           } 
           if(doc.data().collaborators.includes(uid)) {
+            const timeOpen = doc.get('dateCreated', {serverTimestamps: "estimate"}).toDate();
+            const jsDate = new Date(timeOpen); 
+            projOwned.push({...doc.data(), id:doc.id, dateCreated:jsDate})
             projJoined.push({...doc.data(), id:doc.id})
           }
         });
@@ -54,6 +62,7 @@ function UserController () {
       }      
     );
     return () => unSubscribe();
+    
   }, [newProject, uid]);
 
   useEffect(() => {    

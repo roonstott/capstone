@@ -2,6 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { auth } from "./../firebase.js";
 import * as dbFunc from './DatabaseFunctions';
+import { compareDesc } from 'date-fns'
 
 function UserProjGallery ({ allProj, showProj }) {
 
@@ -11,10 +12,19 @@ function UserProjGallery ({ allProj, showProj }) {
     showProj(projId);
   }
 
-  let display = allProj.map(el => {
+  let sortedProjArray = allProj.sort((a,b) => {
+    return (
+      compareDesc(a.dateCreated, b.dateCreated)
+      );
+  });
+
+  let display = sortedProjArray.map(el => {
     const title = el.title;
     const description = el.description;
     const projId = el.id;
+    const dateCreated = el.dateCreated
+    const dateDisplay = dbFunc.formatDate(dateCreated); 
+    
 
     return (
       
@@ -24,7 +34,7 @@ function UserProjGallery ({ allProj, showProj }) {
             {title}
           </div>
         </td>
-        <td className=""><button id={projId} onClick={(e) => showDetail(e)}>{description}</button></td>
+        <td className=""><button id={projId} onClick={(e) => showDetail(e)}>{description} {dateDisplay}</button></td>
       </tr>
     )
   })
