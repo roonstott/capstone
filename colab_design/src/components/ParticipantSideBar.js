@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './../firebase';
 import { collection, doc, getDoc, onSnapshot, getDocs } from "firebase/firestore";
-import SideBarSubList from './SideBarSubList';
 
 function ParticipantSideBar({ proj }) {
   const projId = proj.id  
@@ -24,7 +23,6 @@ function ParticipantSideBar({ proj }) {
               localColabArray.push({...doc.data(), id:doc.id})
             }
             if(doc.data().projectsOwned.includes(projId)) {
-              console.log("owner first name ", doc.data().firstName)
               setOwner({
                 firstName: doc.data().firstName,
                 lastName: doc.data().lastName,
@@ -40,8 +38,6 @@ function ParticipantSideBar({ proj }) {
     );
     return () => unSubscribe();
   }, []);
-
-  console.log("owner: ", owner)
 
     const colabDisplay = colabs.map(el => {
       return (

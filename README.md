@@ -62,3 +62,4 @@
 * _2:10 Researching React component lifecycle_
 * _6:13 Resolved display issue for 'ParticipantSideBar'_
 * _8:44 Add invitationShown state to App component to handle displaying invitation popUp only once after sign-in_
+* _9:47 Add invitation popUp to be shown once on login_

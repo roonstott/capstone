@@ -79,7 +79,7 @@ function ProjDetail({ proj }) {
       <dialog id="participantPopUp" className=" mx-20 w-2/3 h-1/2 border-slate-400 border-2">
         <div className='flex'>
           <div className="basis-5/6">
-            <label Htmlfor="searchParticipants">Add Members</label>
+            <label htmlFor="searchParticipants">Add Members</label>
             <input onChange={(e) => handleQueryMatches(e)} id="searchParticipants" name="searchParticipants" className="m-4 p-2 border-2"/>
             <div id="matches">              
               {matchDivs()}

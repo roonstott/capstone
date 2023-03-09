@@ -7,14 +7,12 @@ import UserController from './UserController';
 function App () {
 
   const [currentUser, setCurrentUser] = useState(auth.currentUser)
-  const [isLoading, setIsLoading] = useState(true)
-  const [invitationShown, setInvitationShown] = useState(false); 
 
   let display;
   if (currentUser === null) {
     display = <SignIn setCurrentUser={setCurrentUser} />
   } else if (currentUser !== null) {
-    display = <UserController isLoading={isLoading} setIsLoading={setIsLoading} invitationShown={invitationShown} setInvitationShown={setInvitationShown} />
+    display = <UserController />
   }
 
   // console.log(auth.currentUser.uid)

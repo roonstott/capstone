@@ -9,7 +9,7 @@ import YourProjects from './YourProjects';
 import ProjDetail from './ProjDetail';
 import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 
-function UserController ({ isLoading, setIsLoading, invitationShown, setInvitationShown}) {
+function UserController () {
   
   const [view, setView] = useState(null);
   const [newProject, setNewProject] = useState(null);
@@ -18,11 +18,12 @@ function UserController ({ isLoading, setIsLoading, invitationShown, setInvitati
   const [projectsInvited, setProjectsInvited] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
   const [projDetail, setProjDetail] = useState(null);
+  const [isLoading, setIsLoading] = useState(true)
+  const [invitationShown, setInvitationShown] = useState(false); 
+
   let display; 
 
   const uid = auth.currentUser.uid;
-
-  console.log("invitation shown ", invitationShown)
 
   useEffect(() => {    
     const unSubscribe = onSnapshot(
@@ -52,11 +53,35 @@ function UserController ({ isLoading, setIsLoading, invitationShown, setInvitati
     return () => unSubscribe();
   }, [newProject]);
 
+  useEffect(() => {
+    if(invitationShown === false) {
+      setTimeout(()=> {
+        document.getElementById("invitationPopUp").showModal();
+        setInvitationShown(true); 
+      }, 1200)
+    }
+  }, [])
+
   const showDetail = (id) => {
     const p = allProjects.filter(p =>p.id === id);
     setProjDetail(p);
     setView("detail");
   }
+
+  // const handleInvitationPopUp = () => {
+  //   console.log("handler called");
+  //   // let invitationDisplay;
+  //   if (invitationShown === false) {
+  //     setInvitationShown(true); 
+  //     document.getElementById("invitationPopUp").showModal();
+  //     // invitationDisplay = projectsInvited.map(inv => {
+  //     //   return (
+  //     //     <p>{inv.title}</p>
+  //     //   )
+  //     // })
+  //   }
+  //   // return invitationDisplay;    
+  // }
   
   if(isLoading === true) {
     return (
@@ -80,10 +105,12 @@ function UserController ({ isLoading, setIsLoading, invitationShown, setInvitati
         <div className="">
           <Header setView={setView}/>
             {display}
-        </div>
+        </div>  
 
-        <dialog>
+        <dialog id="invitationPopUp">
+          <h2>You have pending invitations</h2>
           
+          <button className="bg-red-300 border-slate-400 rounded px-4 py-1" onClick={() => {document.getElementById("invitationPopUp").close()}}>Close</button>
         </dialog>
       </React.Fragment>
     );
