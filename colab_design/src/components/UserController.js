@@ -9,7 +9,7 @@ import YourProjects from './YourProjects';
 import ProjDetail from './ProjDetail';
 import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 
-function UserController ({ isLoading, setIsLoading}) {
+function UserController ({ isLoading, setIsLoading, invitationShown, setInvitationShown}) {
   
   const [view, setView] = useState(null);
   const [newProject, setNewProject] = useState(null);
@@ -20,7 +20,9 @@ function UserController ({ isLoading, setIsLoading}) {
   const [projDetail, setProjDetail] = useState(null);
   let display; 
 
-  const uid = auth.currentUser.uid;  
+  const uid = auth.currentUser.uid;
+
+  console.log("invitation shown ", invitationShown)
 
   useEffect(() => {    
     const unSubscribe = onSnapshot(
@@ -79,6 +81,10 @@ function UserController ({ isLoading, setIsLoading}) {
           <Header setView={setView}/>
             {display}
         </div>
+
+        <dialog>
+          
+        </dialog>
       </React.Fragment>
     );
   }  

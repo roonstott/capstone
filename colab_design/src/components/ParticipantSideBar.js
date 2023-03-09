@@ -1,100 +1,107 @@
 import React, { useState, useEffect } from 'react';
-// import { db } from './../firebase';
+import { db } from './../firebase';
 import { collection, doc, getDoc, onSnapshot, getDocs } from "firebase/firestore";
 import SideBarSubList from './SideBarSubList';
 
-function ParticipantSideBar({ invites, colabs }) {
+function ParticipantSideBar({ proj }) {
+  const projId = proj.id  
 
-  const [invites, setInvites] = useState(null);
-  const [colabs, setColabs] = useState(null);  
+  const [invites, setInvites] = useState([]);
+  const [colabs, setColabs] = useState([]);    
+  const [owner, setOwner] = useState([]);
 
-  const getColabs = () => {
-    const localColabArray = [];
-    project.collaborators.forEach(async colabUid => {
-      const userRef = doc(db, "users", colabUid);
-      const user = await getDoc(userRef);
-      localColabArray.push(user.data())
-    });
-    setColabs(localColabArray);
-  }
-
-  const getInvited = () => {
-    const localInviteArray = [];
-    project.invitations.forEach(async colabUid => {
-      const userRef = doc(db, "users", colabUid);
-      const user = await getDoc(userRef);
-      localInviteArray.push(user.data());    
-    });
-    setInvites(localInviteArray);
-  }
-
-  useEffect(() => {
-    getColabs();
-    getInvited();
+  useEffect(() => {    
+    const unSubscribe = onSnapshot(
+      collection(db, "users"),
+      (collectionSnapshot) => {
+        const localColabArray = [];
+        const localInviteArray= [];
+        collectionSnapshot.forEach((doc) => {
+            if(doc.data().projectsInvited.includes(projId)) {
+              localInviteArray.push({...doc.data(), id:doc.id})
+            } 
+            if(doc.data().projectsJoined.includes(projId)) {
+              localColabArray.push({...doc.data(), id:doc.id})
+            }
+            if(doc.data().projectsOwned.includes(projId)) {
+              console.log("owner first name ", doc.data().firstName)
+              setOwner({
+                firstName: doc.data().firstName,
+                lastName: doc.data().lastName,
+                email: doc.data().email
+              })
+            }
+          })            
+        setInvites(localInviteArray);
+        setColabs(localColabArray);
+      }, (error) => {
+        console.log(error); 
+      }      
+    );
+    return () => unSubscribe();
   }, []);
 
-    const colabDisplay = invites.map(el => {
-      console.log("first name ", el.firstName)
+  console.log("owner: ", owner)
 
+    const colabDisplay = colabs.map(el => {
       return (
         <tr>
           <td>
-            Test
+          {el.firstName} {el.lastName} {el.email}
           </td>
         </tr>
       )
     })
 
-    const inviteDisplay = colabs.map(el => {
-      console.log("first name ", el.firstName)
+    const inviteDisplay = invites.map(el => {  
       return (
         <tr>
           <td>            
-            Test
+            {el.firstName} {el.lastName} {el.email}
           </td>
         </tr>       
       )      
     })
 
-    if (colabDisplay && inviteDisplay) {
-      return (
-        <React.Fragment>
-          <div className="flex flex-col min-h-screen border-1 border-slate-500 w-full bg-gray-100 rounded-sm">
+  return (
+    <React.Fragment>
+      <div className="flex flex-col min-h-screen border-1 border-slate-500 w-full bg-gray-100 rounded-sm">
 
-            <div className='flex'>
-              <table>
-                <thead>
-                  <tr>
-                    <td>
-                      Collaborators
-                    </td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {colabDisplay}
-                </tbody>
-              </table>
-            </div>
+        <h3>Owner: {owner.firstName} {owner.lastName} {owner.email}</h3>
 
-            <div className='flex'>
-              <table>
-                <thead>
-                  <tr>
-                    <td>
-                      Invited
-                    </td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {inviteDisplay}
-                </tbody>
-              </table>
-            </div>
+        <div className='flex'>
+          <table>
+            <thead>
+              <tr>
+                <td>
+                  Collaborators
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              {colabDisplay}
+            </tbody>
+          </table>
+        </div>
 
-          </div>
-        </React.Fragment>
-      )
-    }  
+        <div className='flex'>
+          <table>
+            <thead>
+              <tr>
+                <td>
+                  Invited
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              {inviteDisplay}
+            </tbody>
+          </table>
+        </div>        
+
+      </div>
+    </React.Fragment>
+  )    
 }
 
 export default ParticipantSideBar; 

@@ -59,4 +59,6 @@
 * _11:29 Formatting component ParticipantSideBar_
 * _12:32 Working on db function to display project collaborators and invitees in 'ParticipantSideBar'_
 * _1:34 WIP: Struggling to get 'ParticipantSideBar' component to re-render after props change_
-* _2:10 Researching React component lifecycle_ 
+* _2:10 Researching React component lifecycle_
+* _6:13 Resolved display issue for 'ParticipantSideBar'_
+* _8:44 Add invitationShown state to App component to handle displaying invitation popUp only once after sign-in_

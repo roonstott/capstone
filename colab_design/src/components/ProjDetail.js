@@ -71,7 +71,7 @@ function ProjDetail({ proj }) {
             <p className="min-h-screen bg-white p-12 " contentEditable="true">Start your project</p>
         </div>
         <div className='basis-1/4'>          
-          {sideBar}
+          <ParticipantSideBar proj={project} />
         </div>
       </div>
 

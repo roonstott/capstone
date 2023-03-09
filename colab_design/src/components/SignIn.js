@@ -19,7 +19,6 @@ class SignIn extends React.Component {
     }
   }
 
-  // const [authorized, setAuthorized ] = useState(null);
 
   showSignUp = () => {
     this.setState({
@@ -93,7 +92,7 @@ class SignIn extends React.Component {
       showSignUp: false
     });
     document.getElementById("popUp").close();
-    this.props.setCurrentUser(auth.currentUser); 
+    this.props.setCurrentUser(auth.currentUser);
   }
 
   resetSignIn = () => {
