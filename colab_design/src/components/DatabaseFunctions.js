@@ -68,10 +68,14 @@ export const addCollaborator = async (projId, colabUid) => {
 
 //called when a collaborator is invited to a project. Both adds projId to user invitations array, and adds userId to proj invitations array
 
-export const inviteCollaborator = async (projId, colabUid) => {
+export const inviteCollaborator = async (projId, colabUid) => {  
   const userRef = doc(db, "users", colabUid);
   const userSnap = await getDoc(userRef);
   const userData = userSnap.data();
+  if(userData.projectsJoined.includes(projId) || userData.projectsOwned.includes(projId)) {
+    return;
+  }
+
   if(!userData.projectsInvited.includes(projId)) {
     const updatedUserInvitations = userData.projectsInvited.concat(projId);
     const updatedUser = {...userData, projectsInvited: updatedUserInvitations}

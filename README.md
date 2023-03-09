@@ -64,3 +64,4 @@
 * _8:44 Add invitationShown state to App component to handle displaying invitation popUp only once after sign-in_
 * _9:47 Add invitation popUp to be shown once on login_
 * _10:56 Add functionality to add invitations. Fine tune logic of invitation popUp box_
+* _11:10 Add logic to prevent users from sending invitations to project owner or current collaborators_
