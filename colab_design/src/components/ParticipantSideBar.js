@@ -41,21 +41,19 @@ function ParticipantSideBar({ proj }) {
 
     const colabDisplay = colabs.map(el => {
       return (
-        <tr>
-          <td>
-          {el.firstName} {el.lastName} {el.email}
-          </td>
-        </tr>
+        <div className='m-2'>
+          <p className='mx-2'>{el.firstName} {el.lastName}</p> 
+          <p className='mx-2'>{el.email}</p>
+        </div>   
       )
     })
 
     const inviteDisplay = invites.map(el => {  
       return (
-        <tr>
-          <td>            
-            {el.firstName} {el.lastName} {el.email}
-          </td>
-        </tr>       
+        <div className='m-2'>
+          <p className='mx-2'>{el.firstName} {el.lastName}</p> 
+          <p className='mx-2'>{el.email}</p>
+        </div>    
       )      
     })
 
@@ -63,37 +61,15 @@ function ParticipantSideBar({ proj }) {
     <React.Fragment>
       <div className="flex flex-col min-h-screen border-1 border-slate-500 w-full bg-gray-100 rounded-sm">
 
-        <h3>Owner: {owner.firstName} {owner.lastName} {owner.email}</h3>
-
-        <div className='flex'>
-          <table>
-            <thead>
-              <tr>
-                <td>
-                  Collaborators
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {colabDisplay}
-            </tbody>
-          </table>
-        </div>
-
-        <div className='flex'>
-          <table>
-            <thead>
-              <tr>
-                <td>
-                  Invited
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {inviteDisplay}
-            </tbody>
-          </table>
+        <h3 className='m-2 font-semibold text-lg'>Owner</h3>
+        <div className='m-2'>
+          <p className='mx-2'>{owner.firstName} {owner.lastName}</p> 
+          <p className='mx-2'>{owner.email}</p>
         </div>        
+        <h3 className='m-2 font-semibold text-lg'>Collaborators</h3>
+        {colabDisplay}
+        <h3 className='m-2 font-semibold text-lg'>Invitations</h3>
+        {inviteDisplay}       
 
       </div>
     </React.Fragment>

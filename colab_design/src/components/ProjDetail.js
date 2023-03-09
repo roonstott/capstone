@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { collection, doc, getDoc, onSnapshot, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot, getDocs, updateDoc } from "firebase/firestore";
 import { db } from './../firebase';
 import * as dbFunc from './DatabaseFunctions';
 import ParticipantSideBar from './ParticipantSideBar';
@@ -7,7 +7,8 @@ import ParticipantSideBar from './ParticipantSideBar';
 function ProjDetail({ proj }) {
   const project = proj[0];
   const title = project.title;
-
+  const textEditor = project.value;
+  const projId = project.id
   const [matches, setMatches] = useState([]);  
 
   const openPopUp = () => {
@@ -57,6 +58,16 @@ function ProjDetail({ proj }) {
       })
     } 
 
+    const handleSave = async () => {
+      console.log("projId: ", projId); 
+      const newValue = document.getElementById("textEditor").innerText;
+      const projRef = doc(db, "projects", projId);
+      const projSnap = await getDoc(projRef);
+      const projData = projSnap.data(); 
+      const updatedProjData = {...projData, id:projId, value:newValue};
+      await updateDoc(projRef, updatedProjData);
+    }
+
   return (
     <React.Fragment>
       <div className="flex justify-around p-8 my-12">
@@ -65,10 +76,10 @@ function ProjDetail({ proj }) {
             <h3 className="basis-1/2 text-align-center p-4 text-2xl">{title}</h3>
             <div className="basis-1/2 flex justify-end">
               <button onClick={openPopUp} className=" bg-slate-200 m-2 h-12 w-auto text-align-center p-2 hover:text-lg hover:drop-shadow-xl">participants</button>
-              <button className=" bg-emerald-400 m-2 h-12 w-20 text-align-center p-2 hover:text-lg hover:drop-shadow-xl">Save</button>
+              <button onClick={() => handleSave()}className=" bg-emerald-400 m-2 h-12 w-20 text-align-center p-2 hover:text-lg hover:drop-shadow-xl">Save</button>
             </div>
           </div>
-            <p className="min-h-screen bg-white p-12 " contentEditable="true">Start your project</p>
+            <p id="textEditor" className="min-h-screen bg-white p-12 " contentEditable="true">{textEditor}</p>
         </div>
         <div className='basis-1/4'>          
           <ParticipantSideBar proj={project} />

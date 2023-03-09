@@ -9,7 +9,9 @@ function UserProjGallery ({ allProj, showProj }) {
   const showDetail = (event) => {
     event.preventDefault(); 
     const projId = event.target.id;
-    showProj(projId);
+    if (projId) {
+      showProj(projId);
+    }    
   }
 
   let sortedProjArray = allProj.sort((a,b) => {
@@ -30,14 +32,14 @@ function UserProjGallery ({ allProj, showProj }) {
       
       <tr className="bg-zinc-100 hover:bg-blue-50">
         <td className=" w-32 h-32 opacity-50 p-8 hover:opacity-100">          
-          <button id={projId} onClick={(e) => showDetail(e)} className=" flex items-center justify-center bg-cyan-600 w-full h-full m-8 my-8 outline outline-2 rounded hover:shadow-2xl outline-2 outline-slate-300 cursor-pointer hover:outline-emerald-500 hover:scale-105 ">
+          <div id={projId} onClick={(e) => showDetail(e)} className=" flex items-center justify-center bg-cyan-600 w-32 h-32 outline outline-2 rounded hover:shadow-2xl outline-2 outline-slate-300 cursor-pointer hover:outline-emerald-500 hover:scale-105 ">
             <p className='text-center text-2xl text-white'>Proj</p>
-          </button>
+          </div>
         </td>
         <td className="grid grid-cols-1 justify-items-center p-6">
-          <h4 className='p-2'>{title}</h4>
+          <h4 className='p-2 text-lg font-bold'>{title}</h4>
           <p className='p-2'>{description}</p>
-          <p className='p-2'>{dateDisplay}</p>
+          <p className='p-2 text-sm'>Created {dateDisplay}</p>
         </td>
       </tr>
     )

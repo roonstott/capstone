@@ -26,6 +26,7 @@ export const makeProject = async (ownerId, title, description) => {
     ownerId,
     title: titleVal,
     description,
+    value: "Start your project",
     dateCreated: serverTimestamp(),
     invitations: [], //empty array to be filled with uid as invitations are extended
     collaborators: [], //empy array to be filled with uid's as invitees accept
@@ -93,10 +94,6 @@ export const inviteCollaborator = async (projId, colabUid) => {
     const updatedProj = {...projData, invitations: updatedInvitations}
     await updateDoc(projRef, updatedProj);
   }
-}
-
-const saveChanges = (projId, editorId, parentId) => {
-  
 }
 
 export const formatDate = (dateObj) => {

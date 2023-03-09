@@ -74,3 +74,4 @@
 * _11:30 Still working on styling_
 * _12:06 More styling. Add setTimeout to popup window to close signInSuccess popUp after 1 sec_
 * _1:00 Format projGallery view_
+* _2:17 Add function to ProjDetail to update project text value when 'save' button is clicked_

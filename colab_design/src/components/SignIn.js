@@ -80,12 +80,7 @@ class SignIn extends React.Component {
   popUp = () => {
     if(this.state.signInMessage !== "") {
       document.getElementById("popUp").showModal();
-    }
-    if(this.state.signInSuccess) {
-      setInterval(() => {
-        this.goToAccount()
-      }, 1000)
-    }
+    }    
   }
 
   goToAccount = () => {
