@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import { auth, db } from './../firebase';
 import Header from './Header';
-// import * as dbFunc from './DatabaseFunctions';
+import * as dbFunc from './DatabaseFunctions';
 import UserCreateProj from './UserCreateProj';
 import UserProjGallery from './UserProjGallery'; 
 import YourProjects from './YourProjects';
@@ -19,7 +19,8 @@ function UserController () {
   const [allProjects, setAllProjects] = useState([]);
   const [projDetail, setProjDetail] = useState(null);
   const [isLoading, setIsLoading] = useState(true)
-  const [invitationShown, setInvitationShown] = useState(false); 
+  const [invitationShown, setInvitationShown] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false)
 
   let display; 
 
@@ -35,9 +36,11 @@ function UserController () {
         collectionSnapshot.forEach((doc) => {
           if(doc.data().ownerId === uid) {
             projOwned.push({...doc.data(), id:doc.id})
-          } else if(doc.data().invitations.includes(uid)) {
+          } 
+          if(doc.data().invitations.includes(uid)) {
             projInvited.push({...doc.data(), id:doc.id})
-          } else if(doc.data().collaborators.includes(uid)) {
+          } 
+          if(doc.data().collaborators.includes(uid)) {
             projJoined.push({...doc.data(), id:doc.id})
           }
         });
@@ -51,16 +54,17 @@ function UserController () {
       }      
     );
     return () => unSubscribe();
-  }, [newProject]);
+  }, [newProject, uid]);
 
-  useEffect(() => {
-    if(invitationShown === false) {
+  useEffect(() => {    
+    if(invitationShown === false && projectsInvited.length > 0) {
       setTimeout(()=> {
         document.getElementById("invitationPopUp").showModal();
-        setInvitationShown(true); 
+        setInvitationShown(true);
+        setModalOpen(true);
       }, 1200)
     }
-  }, [])
+  }, [invitationShown, projectsInvited])
 
   const showDetail = (id) => {
     const p = allProjects.filter(p =>p.id === id);
@@ -68,20 +72,30 @@ function UserController () {
     setView("detail");
   }
 
-  // const handleInvitationPopUp = () => {
-  //   console.log("handler called");
-  //   // let invitationDisplay;
-  //   if (invitationShown === false) {
-  //     setInvitationShown(true); 
-  //     document.getElementById("invitationPopUp").showModal();
-  //     // invitationDisplay = projectsInvited.map(inv => {
-  //     //   return (
-  //     //     <p>{inv.title}</p>
-  //     //   )
-  //     // })
-  //   }
-  //   // return invitationDisplay;    
-  // }
+  const showInvitations = () => {
+    let invitationDisplay;
+    if (projectsInvited.length === 0 && modalOpen === true) {
+      setTimeout(() => {
+        document.getElementById("invitationPopUp").close();
+      }, 600);      
+    } else if (projectsInvited.length > 0) {      
+      invitationDisplay = projectsInvited.map(inv => {
+        return (
+          <div className='flex justify-around'>
+            <div className='basis-1/2 p-6'>
+              <p className='text-lg'>{inv.title}</p>
+              <p className='text-sm'>{inv.description}</p>            
+            </div>
+            <div className='basis-1/2 p-6'>
+              <button onClick={() => dbFunc.addCollaborator(inv.id, uid)} className="bg-emerald-300 border-slate-400 rounded px-4 py-1 mx-6">Accept</button>
+              <button className="bg-red-300 border-slate-400 rounded px-4 py-1 mx-6">Dismiss</button>
+            </div>
+          </div>          
+        )
+      })
+    }
+    return invitationDisplay;    
+  }
   
   if(isLoading === true) {
     return (
@@ -103,14 +117,16 @@ function UserController () {
     return (
       <React.Fragment>
         <div className="">
-          <Header setView={setView}/>
+          <Header setView={setView} projectsInvited={projectsInvited} setModalOpen={setModalOpen}/>
             {display}
-        </div>  
+        </div>
 
-        <dialog id="invitationPopUp">
-          <h2>You have pending invitations</h2>
-          
-          <button className="bg-red-300 border-slate-400 rounded px-4 py-1" onClick={() => {document.getElementById("invitationPopUp").close()}}>Close</button>
+        <dialog className="w-2/3 h-1/2" id="invitationPopUp">
+          <div className='p-6'>
+            <h2 className='text-center text-2xl'>You have pending invitations</h2>
+            {showInvitations()}          
+            <button className="bg-red-300 border-slate-400 rounded px-4 py-1" onClick={() => {document.getElementById("invitationPopUp").close(); setModalOpen(false)}}>Close</button>
+          </div>
         </dialog>
       </React.Fragment>
     );
