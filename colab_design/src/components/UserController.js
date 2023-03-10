@@ -42,14 +42,12 @@ function UserController () {
           if(doc.data().invitations.includes(uid)) {
             const timeOpen = doc.get('dateCreated', {serverTimestamps: "estimate"}).toDate();
             const jsDate = new Date(timeOpen); 
-            projOwned.push({...doc.data(), id:doc.id, dateCreated:jsDate})
-            projInvited.push({...doc.data(), id:doc.id})
+            projInvited.push({...doc.data(), id:doc.id, dateCreated:jsDate})
           } 
           if(doc.data().collaborators.includes(uid)) {
             const timeOpen = doc.get('dateCreated', {serverTimestamps: "estimate"}).toDate();
             const jsDate = new Date(timeOpen); 
-            projOwned.push({...doc.data(), id:doc.id, dateCreated:jsDate})
-            projJoined.push({...doc.data(), id:doc.id})
+            projJoined.push({...doc.data(), id:doc.id, dateCreated:jsDate})
           }
         });
         setProjectsOwned(projOwned);
@@ -86,6 +84,7 @@ function UserController () {
     if (projectsInvited.length === 0 && modalOpen === true) {
       setTimeout(() => {
         document.getElementById("invitationPopUp").close();
+        setModalOpen(false); 
       }, 600);      
     } else if (projectsInvited.length > 0) {      
       invitationDisplay = projectsInvited.map(inv => {

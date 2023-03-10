@@ -108,11 +108,14 @@ class SignIn extends React.Component {
 
   popUpContent = () => {
     if(this.state.signInSuccess) {
+      setTimeout(() => {
+        this.goToAccount()
+      }, 1400)
       return (
         <div>
-          <div className='flex justify-end bg-slate-100 h-8'>
+          {/* <div className='flex justify-end bg-slate-100 h-8'>
             <button className="text-lg px-4 py-1" type="click" onClick={() => this.goToAccount()}>X</button>
-          </div>
+          </div> */}
           <div className=' h-fit flex items-center my-8'>
             <p className='text-center'>{this.state.signInMessage}</p>        
           </div>              
