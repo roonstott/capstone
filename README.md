@@ -8,6 +8,7 @@
 
 * _React.js_
 * _FireBase & Firestore_
+* _Tailwind CSS Library_
 * _Node_
 * _create-react-app_
 * _NPM_
