@@ -1,77 +1,68 @@
+# _Collaboration Hub_
 
+#### By _**Robert Onstott**_
 
-### Research & Planning Log
+#### _This is an online text editor that allows users to create, share, and collaborate on text editing projects. It is built with React.js frontend and a Firestore NoSQL database._
 
-#### Friday, 02/17
+## Technologies Used
 
-* _08:00 Initial commit_
-* _08:36 Watching this YouTube tutorial: https://www.youtube.com/watch?v=X-iSQQgOd1A about ant and slime mold simulations_
-* _09:10 Studying this repository about slime mold simulations_
-* _09:46 Reading documentation on three.js: https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene_
-* _10:34 Working through tutorial on three.js: https://threejs.org/manual/#en/fundamentals_
-* _11:21 Working through tutorial on WEbGL: https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Adding_2D_content_to_a_WebGL_context_
-* _12:10 Still working through WEbGl tutorial, trying to config webpack environment for tutorial_
-* _1:00 Back from lunch. Will continue with WebGl tutorial_
-* _1:44 Still working on the WebGl tutorial_
-* _2:33 Watching this tutorial: https://www.youtube.com/watch?v=kB0ZVUrI4Aw_
-* _3:25 Reviewing this repository again: https://github.com/nicoptere/physarum_
-* _4:16 Reading about glMatrix and installing with NPM: https://math.hws.edu/graphicsbook/c7/s1.html#webgl3d.1.2_
-* _5:00 Reading documentation on three.js and three-fiber.js the react 'wrapper' for three.js_
+* _React.js_
+* _FireBase & Firestore_
+* _Node_
+* _create-react-app_
+* _NPM_
 
-#### Friday, 02/24
+## Description
 
-* _8:40 Reading the Firebase Hosting documentation_
-* _09:09 Diagramming React component structure_ 
-* _09:52 Still diagramming React component structure_
-* _10:49 Still planning component structure_ 
-* _11:20 Setting up FireStore account_ 
-* _12:00 Break for lunch. Planning database structure_
-* _12:57 Back from lunch. Will begin building React component structure with NoSQL database_
-* _1:34 Started building react app_
-* _2:12 Building register and sign in pages_
-* _2:47 Configuring firestore_
-* _3:10 Adding firebase auth_
-* _4:00 Reading firebase documentation_
-* _4:44 Setting up account registration_
-* _5:08 Still working on user authentication and authorization_
-* _5:50 Done for day. WIP: Authorization and Authentication_
+_After registering their accounts with an email address and password, users can log in to their home page, where they can access projects that they have created, projects that they have joined from other Colab Design users, and the pending invitations that they haven't accepted yet. By clicking on any of the project icons, users can see the project detail. There is a text editing page, where they can edit the project text and save changes. Users can click the participants button to search the database for other Colab Design users who they would like to invite to join their projects. Users are queryable be first name, last name, and email address. Partial matches appear in a dropdown and are added by clicking on the entry._
 
-#### Tuesday, 3/7
+## Setup/Installation Requirements
 
-* _8:25 First commit of day_
-* _9:05 Working on sizing of user project gallery_
-* _10:15 Still working on styling of project gallery_
-* _10:56 Add userController method to switch to project detail view_
-* _12:05 Format project detail component and add text editing box_
-* _12:46 Format text editor_
-* _1:37 Adding 'add member' popup to project detail_
-* _2:30 Researching input dropdown search match suggestions_
-* _3:39 Still working on input dropdown search match suggestions_
-* _4:26 Finish with dropdown suggestions, now linking to db udpate function_
-* _5:18 Write function to update db with user invitation_
-* _6:38 Debug database update functions to correct docRef <-> doc.id transpositions_
+* _Clone this repository to your local machine_
+* _Download Node and NPM if you haven't already `https://docs.npmjs.com/downloading-and-installing-node-js-and-npm`_
+* _Navigate to the project directory `cd colab_design` and enter these commands: `npm install` and `npm run start`_
+* _With the program running, copy the url `http://localhost:3000` into a browser window_
+* _You are now interacting with the app in the browser and can access its functions._
 
-#### Wednesday, 3/8
+## Known Bugs
 
-* _8:50 Reading about d3.js_
-* _09:45 Formatting the YourProjects component_
-* _10:36 Start component for participant sidebar navigator_
-* _11:29 Formatting component ParticipantSideBar_
-* _12:32 Working on db function to display project collaborators and invitees in 'ParticipantSideBar'_
-* _1:34 WIP: Struggling to get 'ParticipantSideBar' component to re-render after props change_
-* _2:10 Researching React component lifecycle_
-* _6:13 Resolved display issue for 'ParticipantSideBar'_
-* _8:44 Add invitationShown state to App component to handle displaying invitation popUp only once after sign-in_
-* _9:47 Add invitation popUp to be shown once on login_
-* _10:56 Add functionality to add invitations. Fine tune logic of invitation popUp box_
-* _11:10 Add logic to prevent users from sending invitations to project owner or current collaborators_
+* _No known bugs at this time_
 
-#### Thursday, 3/09
+## Available Scripts
 
-* _8:18 Adding timestamp to new documents in order to display by date created_
-* _9:20 using date-fn to sort projects and display newest first_
-* _10:30 Touching up formatting_
-* _11:30 Still working on styling_
-* _12:06 More styling. Add setTimeout to popup window to close signInSuccess popUp after 1 sec_
-* _1:00 Format projGallery view_
-* _2:17 Add function to ProjDetail to update project text value when 'save' button is clicked_
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## License
+
+_MIT_
+
+_Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:_
+
+_The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software._
+
+_THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE._
+
+Copyright (c) _March 2023_ _Robert Onstott_
